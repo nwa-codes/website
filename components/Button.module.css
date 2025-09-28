@@ -1,0 +1,86 @@
+/* Button Base Styles */
+.button {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 400;
+  transition: all 0.2s ease;
+  min-height: 44px;
+  font-size: 20px;
+  border-radius: 100px;
+  padding: 12px 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 24px;
+}
+
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Default Variant - Primary Color (White) */
+.default.primary {
+  background-color: white;
+  color: black;
+  border: 2px solid white;
+}
+
+.default.primary:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+/* Default Variant - Secondary Color */
+.default.secondary {
+  background-color: var(--secondary-color);
+  color: white;
+  border: 2px solid var(--secondary-color);
+}
+
+.default.secondary:hover:not(:disabled) {
+  background-color: #FF628E;
+  border-color: #FF628E;
+}
+
+/* Outline Variant - Primary Color (White) */
+.outline.primary {
+  background-color: transparent;
+  color: white;
+  border: none;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+}
+
+.outline.primary:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 1);
+}
+
+/* Outline Variant - Secondary Color (Pink) */
+.outline.secondary {
+  background-color: transparent;
+  color: var(--secondary-color);
+  border: none;
+  box-shadow: inset 0 0 0 1px rgba(227, 35, 89, 0.4);
+}
+
+.outline.secondary:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 0 0 1px rgba(227, 35, 89, 1);
+}
+
+/* Focus styles for outline buttons - use white outline */
+.outline:focus {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+.outline:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}

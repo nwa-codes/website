@@ -1,0 +1,139 @@
+.eventCard {
+  background-color: #1d1d1d;
+  overflow: hidden;
+  transition: background-color 0.2s;
+  height: 176px;
+}
+
+.eventCard:hover {
+  background-color: #151515;
+}
+
+.eventImageContainer {
+  position: relative;
+  width: 100%;
+  height: 176px;
+  overflow: hidden;
+}
+
+.eventImageContainer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: var(--background-image, url('/events/default-event-background.jpg'));
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(3px);
+  opacity: 0.4;
+  z-index: 1;
+}
+
+.contentWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 16px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.buttonSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.watchButton {
+  padding: 12px 24px;
+  gap: 8px;
+}
+
+.watchButton:focus {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+.watchButton:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+.playIcon {
+  width: 14px;
+  height: 14px;
+}
+
+.eventSpeaker {
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+}
+
+.eventContent {
+  padding: 0;
+}
+
+.eventDate {
+  color: #c7c7c7;
+  font-size: 16px;
+  margin-bottom: 0;
+}
+
+.eventTitle {
+  font-weight: 700;
+  color: white;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.4;
+  font-size: 20px;
+}
+
+
+/* Tablet and up styles */
+@media (min-width: 768px) {
+  .eventCard {
+    max-width: 360px;
+    height: 208px;
+  }
+
+  .eventImageContainer {
+    height: 208px;
+  }
+
+
+  .watchButton {
+    padding: 12px 24px;
+  }
+
+  .playIcon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .eventSpeaker {
+    width: 48px;
+    height: 48px;
+  }
+
+  .eventContent {
+    padding: 0;
+  }
+
+  .eventDate {
+    font-size: 16px;
+  }
+
+  .eventTitle {
+    font-size: 24px;
+  }
+}

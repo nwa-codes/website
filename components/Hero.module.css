@@ -1,0 +1,268 @@
+.hero {
+  position: relative;
+  height: auto;
+  width: 100%;
+  margin-left: 0;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: var(--background-image, url('/events/default-event-background.jpg'));
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(7px) brightness(0.7);
+  mask: linear-gradient(to bottom,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 1) 50%,
+      rgba(0, 0, 0, 0.8) 60%,
+      rgba(0, 0, 0, 0.5) 70%,
+      rgba(0, 0, 0, 0.2) 80%,
+      rgba(0, 0, 0, 0.05) 90%,
+      rgba(0, 0, 0, 0) 100%);
+  -webkit-mask: linear-gradient(to bottom,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 1) 50%,
+      rgba(0, 0, 0, 0.8) 60%,
+      rgba(0, 0, 0, 0.5) 70%,
+      rgba(0, 0, 0, 0.2) 80%,
+      rgba(0, 0, 0, 0.05) 90%,
+      rgba(0, 0, 0, 0) 100%);
+  z-index: 0;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  height: auto;
+  max-width: 1128px;
+  margin: 0 auto;
+  padding: 268px 20px 64px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  filter: none;
+}
+
+.photoCredit {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  z-index: 3;
+}
+
+.photoCredit a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+}
+
+.photoCredit a:hover {
+  text-decoration: underline;
+}
+
+.eventDate {
+  color: #c7c7c7;
+  margin-bottom: 16px;
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  line-height: 24px;
+}
+
+.heroTitle {
+  font-size: 48px;
+  font-weight: 300;
+  margin-bottom: 24px;
+  line-height: normal;
+}
+
+.eventDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.speakerInfo,
+.locationInfo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.speakerAvatar {
+  border-radius: 50%;
+  width: 68px;
+  height: 68px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.speakerName,
+.venueName {
+  font-weight: 600;
+  font-size: 16px;
+  color: white;
+  margin-bottom: 2px;
+}
+
+.speakerTitle,
+.venueAddress {
+  color: #c7c7c7;
+  font-size: 16px;
+}
+
+.locationIcon {
+  width: 68px;
+  height: 68px;
+  color: #e32359;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.heroActions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.rsvpButton {
+  padding: 12px 24px;
+  border-radius: 50px;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.sponsorInfo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: #c7c7c7;
+  font-size: 16px;
+}
+
+.sponsorName {
+  font-style: italic;
+  font-family: cursive;
+}
+
+.sponsorLogo {
+  width: auto;
+  max-height: 40px;
+}
+
+.noEventMessage {
+  color: #c7c7c7;
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 600px;
+}
+
+.noEventMessage p {
+  margin: 0;
+}
+
+
+/* Tablet and up hero */
+@media (min-width: 768px) {
+  .hero {
+    height: 100vh;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+  }
+
+  .heroContent {
+    height: 100%;
+    padding: 64px 24px;
+    justify-content: center;
+  }
+
+  .photoCredit {
+    bottom: 24px;
+    right: 24px;
+    font-size: 14px;
+  }
+
+  .eventDate {
+    font-family: inherit;
+    font-weight: 400;
+    font-size: 24px;
+    letter-spacing: 0.1em;
+  }
+
+  .heroTitle {
+    font-family: inherit;
+    font-weight: 400;
+    font-size: 112px;
+    margin-bottom: 48px;
+  }
+
+  .eventDetails {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 32px;
+  }
+
+  .speakerInfo,
+  .locationInfo {
+    flex: 1;
+  }
+
+  .speakerAvatar {
+    width: 72px;
+    height: 72px;
+  }
+
+  .speakerName,
+  .venueName {
+    font-weight: 600;
+    font-size: 24px;
+  }
+
+  .speakerTitle,
+  .venueAddress {
+    font-weight: 300;
+    font-size: 24px;
+  }
+
+  .locationIcon {
+    height: 72px;
+    width: auto;
+  }
+
+  .eventDetails {
+    margin-bottom: 48px;
+  }
+
+  .heroActions {
+    flex-direction: row;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .sponsorInfo {
+    font-size: 16px;
+  }
+
+  .rsvpButton {
+    width: auto;
+    padding: 12px 32px;
+  }
+
+  .sponsorInfo {
+    font-size: 16px;
+  }
+
+  .noEventMessage {
+    font-size: 20px;
+  }
+}
+

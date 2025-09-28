@@ -1,0 +1,185 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.overlayContent {
+  background-color: #1d1d1d;
+  border-radius: 12px;
+  padding: 20px;
+  width: 90%;
+  max-width: 400px;
+  animation: slideUp 0.3s ease-in-out;
+}
+
+.overlayHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.overlayTitle {
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+}
+
+.eventTitle {
+  color: white;
+  font-size: 24px;
+  font-weight: 300;
+  margin: 0;
+}
+
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.overlaySubmitButton {
+  width: 100%;
+  padding: 12px 24px;
+  border-radius: 50px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+.rsvpButton {
+  padding: 12px 24px;
+  border-radius: 50px;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.successMessage {
+  color: #10b981;
+  font-size: 14px;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.errorMessage {
+  color: var(--secondary-color);
+  font-size: 14px;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rsvpButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+  flex-shrink: 0;
+}
+
+.closeButton:hover {
+  color: #e32359;
+}
+
+.closeIcon {
+  font-size: 16px;
+  height: 16px;
+}
+
+/* Desktop styles */
+@media (min-width: 768px) {
+  .rsvpButton {
+    width: auto;
+    margin-bottom: 0;
+    padding: 12px 32px;
+  }
+
+  .overlayContent {
+    width: auto;
+    min-width: 400px;
+    max-width: 500px;
+    padding: 24px;
+  }
+
+  .overlayHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 32px;
+  }
+
+  .titleSection {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .closeButton {
+    margin-top: 2px;
+  }
+
+  .overlayTitle {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .eventTitle {
+    font-size: 24px;
+    font-weight: 300;
+    margin: 16px 0 0 0;
+  }
+
+  .inputWrapper {
+    margin-bottom: 32px;
+  }
+
+
+  .overlaySubmitButton {
+    width: 100%;
+  }
+
+  .closeIcon {
+    font-size: 24px;
+    height: 24px;
+  }
+}

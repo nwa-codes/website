@@ -1,0 +1,31 @@
+{
+  "name": "my-v0-project",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "lint": "next lint",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@awesome.me/kit-5c0a16ac00": "^1.0.7",
+    "@fortawesome/fontawesome-svg-core": "^7.0.1",
+    "@fortawesome/react-fontawesome": "^3.0.2",
+    "airtable": "^0.12.2",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "lucide-react": "^0.454.0",
+    "next": "14.2.16",
+    "react": "^18",
+    "react-dom": "^18",
+    "resend": "^6.0.3",
+    "zod": "^4.1.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "typescript": "^5"
+  }
+}
