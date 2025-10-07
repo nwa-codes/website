@@ -46,6 +46,7 @@ export const events: MockEvent[] = [
   {
     date: '2025-03-11T19:00:00-06:00',
     title: 'JS Basics: From Zero to Hero',
+    videoUrl: 'http://www.example.com',
     venue: {
       name: 'Fayetteville Town Center',
       address: '15 W Mountain St, Fayetteville, AR 72701'
