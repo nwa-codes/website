@@ -97,6 +97,13 @@
   gap: 16px;
 }
 
+.speakerInfo dd,
+.locationInfo dd {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .speakerAvatar {
   border-radius: 50%;
   width: 68px;
