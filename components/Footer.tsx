@@ -1,4 +1,5 @@
 import type { JSX } from 'react';
+import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faYoutube,
@@ -12,7 +13,12 @@ export const Footer = (): JSX.Element => {
   return (
     <footer className={styles.footer}>
       <div className={styles.footerContent}>
-        <p className={styles.copyright}>© 2025 NWA Codes</p>
+        <p className={styles.copyright}>
+          © 2025 NWA Codes •{' '}
+          <Link href="/code-of-conduct" className={styles.footerLink}>
+            Code of Conduct
+          </Link>
+        </p>
         <nav className={styles.socialIcons} aria-label="Social media links">
           <a
             href="https://www.youtube.com/@nwacodes"
