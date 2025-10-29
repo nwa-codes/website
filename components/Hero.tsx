@@ -7,6 +7,7 @@ import { ScrollIndicator } from '@/components/ScrollIndicator';
 import styles from './Hero.module.css';
 import type { Event } from '@/utils/event.types';
 import { format, addMonths, parseISO, isAfter } from 'date-fns';
+import { formatInTimeZone } from 'date-fns-tz';
 
 type HeroProps = {
   nextEvent: Event | null;
@@ -57,7 +58,11 @@ export const Hero = ({ nextEvent, hasPastEvents, lastEvent }: HeroProps): JSX.El
   }
 
   const speaker = nextEvent.speaker;
-  const formattedDate = format(new Date(nextEvent.date), 'EEE, MMM d, yyyy, h:mm a');
+  const formattedDate = formatInTimeZone(
+    new Date(nextEvent.date),
+    'America/Chicago',
+    'EEE, MMM d, yyyy, h:mm a'
+  );
   const backgroundImage = nextEvent.imageUrl || '/events/default-event-background.jpg';
 
   const backgroundImageStyle: BackgroundImageStyle = {
