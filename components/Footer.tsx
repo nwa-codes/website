@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faYoutube,
   faFacebookF,
-  faXTwitter
+  faXTwitter,
   faDiscord
 } from '@awesome.me/kit-5c0a16ac00/icons/classic/brands';
 import styles from './Footer.module.css';
