@@ -3,7 +3,8 @@ import type { Event } from './event.types';
 
 const sponsorLogoMap: Record<string, string> = {
   'Sleepy Fox': '/sponsors/sleepy-fox-event-logo.svg',
-  'Akra Collective': '/sponsors/akra-logo.svg'
+  'Akra Collective': '/sponsors/akra-logo.svg',
+  'U of A Collaborative': '/sponsors/ua-collaborative-logo.png'
 };
 
 const DEFAULT_IMAGE_CREDIT = 'Photo by Mohammad Rahmani on Unsplash';
