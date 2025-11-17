@@ -5,7 +5,7 @@ import {
   faYoutube,
   faFacebookF,
   faXTwitter
-  // faDiscord
+  faDiscord
 } from '@awesome.me/kit-5c0a16ac00/icons/classic/brands';
 import styles from './Footer.module.css';
 
@@ -47,15 +47,15 @@ export const Footer = (): JSX.Element => {
           >
             <FontAwesomeIcon icon={faXTwitter} className={styles.socialIcon} aria-hidden="true" />
           </a>
-          {/* <a */}
-          {/*   href="https://discord.gg/9zdhcZn4Tp" */}
-          {/*   target="_blank" */}
-          {/*   rel="noopener noreferrer" */}
-          {/*   className={styles.socialLink} */}
-          {/*   aria-label="Join NWA Codes Discord server (opens in new tab)" */}
-          {/* > */}
-          {/*   <FontAwesomeIcon icon={faDiscord} className={styles.socialIcon} aria-hidden="true" /> */}
-          {/* </a> */}
+          <a
+            href="https://discord.gg/rdbne3fJcN"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.socialLink}
+            aria-label="Join NWA Codes Discord server (opens in new tab)"
+          >
+            <FontAwesomeIcon icon={faDiscord} className={styles.socialIcon} aria-hidden="true" />
+          </a>
         </nav>
       </div>
     </footer>
