@@ -54,14 +54,16 @@ export function EventCard({ event }: EventCardProps): JSX.Element {
                 <FontAwesomeIcon icon={faPlay} className={styles.playIcon} aria-hidden="true" />
               </Button>
             )}
-            <Image
-              src={event.speaker?.imageUrl || '/placeholder.svg'}
-              alt={event.speaker?.name ? `${event.speaker.name}, Speaker` : 'Event speaker'}
-              width={48}
-              height={48}
-              className={styles.eventSpeaker}
-              title={event.speaker?.name}
-            />
+            {event.speaker?.name && (
+              <Image
+                src={event.speaker.imageUrl || '/placeholder.svg'}
+                alt={`${event.speaker.name}, Speaker`}
+                width={48}
+                height={48}
+                className={styles.eventSpeaker}
+                title={event.speaker.name}
+              />
+            )}
           </div>
         </header>
       </div>

@@ -82,22 +82,24 @@ export const Hero = ({ nextEvent, hasPastEvents, lastEvent }: HeroProps): JSX.El
         <h1 className={styles.heroTitle}>{nextEvent.title}</h1>
 
         <dl className={styles.eventDetails}>
-          <div className={styles.speakerInfo}>
-            <dt className="sr-only">Speaker</dt>
-            <dd>
-              <Image
-                src={speaker?.imageUrl || '/placeholder.svg?height=60&width=60'}
-                alt={speaker?.name ? `${speaker.name}, Speaker` : 'Event speaker'}
-                width={72}
-                height={72}
-                className={styles.speakerAvatar}
-              />
-              <div>
-                <div className={styles.speakerName}>{speaker?.name}</div>
-                <div className={styles.speakerTitle}>{speaker?.speakerTitle}</div>
-              </div>
-            </dd>
-          </div>
+          {speaker?.name && (
+            <div className={styles.speakerInfo}>
+              <dt className="sr-only">Speaker</dt>
+              <dd>
+                <Image
+                  src={speaker.imageUrl || '/placeholder.svg?height=60&width=60'}
+                  alt={`${speaker.name}, Speaker`}
+                  width={72}
+                  height={72}
+                  className={styles.speakerAvatar}
+                />
+                <div>
+                  <div className={styles.speakerName}>{speaker.name}</div>
+                  <div className={styles.speakerTitle}>{speaker.speakerTitle}</div>
+                </div>
+              </dd>
+            </div>
+          )}
 
           <div className={styles.locationInfo}>
             <dt className="sr-only">Location</dt>

@@ -1,6 +1,16 @@
 import type { MockEvent } from './event.types';
 
 export const events: MockEvent[] = [
+  // {
+  //   date: '2025-12-15T19:00:00-06:00',
+  //   title: 'Community Networking Night',
+  //   imageUrl: '/events/default-event-background.jpg',
+  //   venue: {
+  //     name: 'Fayetteville Town Center',
+  //     address: '15 W Mountain St, Fayetteville, AR 72701'
+  //   },
+  //   imageCredit: 'Photo by Mohammad Rahmani on Unsplash'
+  // },
   {
     date: '2025-06-26T19:00:00-06:00',
     title: 'A Comparison of Modern Frameworks',

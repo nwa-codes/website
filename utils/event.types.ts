@@ -14,7 +14,7 @@ export type Event = {
   date: string;
   title: string;
   imageUrl?: string;
-  speaker: Speaker;
+  speaker?: Speaker;
   venue: Venue;
   videoUrl?: string;
   sponsoredBy?: string[];
@@ -26,7 +26,7 @@ export type MockEvent = {
   date: string;
   title: string;
   imageUrl?: string;
-  speaker: Speaker;
+  speaker?: Speaker;
   venue: Venue;
   videoUrl?: string;
   sponsoredBy?: string;
