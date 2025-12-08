@@ -51,6 +51,12 @@
   align-items: center;
 }
 
+.watchLink {
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+}
+
 .watchButton {
   padding: 12px 24px;
   gap: 8px;

@@ -45,14 +45,21 @@ export function EventCard({ event }: EventCardProps): JSX.Element {
           </div>
           <div className={styles.buttonSection}>
             {event.videoUrl && (
-              <Button
-                variant="outline"
-                className={styles.watchButton}
-                aria-label={`Watch ${event.title} video`}
+              <a
+                href={event.videoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.watchLink}
               >
-                WATCH
-                <FontAwesomeIcon icon={faPlay} className={styles.playIcon} aria-hidden="true" />
-              </Button>
+                <Button
+                  variant="outline"
+                  className={styles.watchButton}
+                  aria-label={`Watch ${event.title} video`}
+                >
+                  WATCH
+                  <FontAwesomeIcon icon={faPlay} className={styles.playIcon} aria-hidden="true" />
+                </Button>
+              </a>
             )}
             {event.speaker?.name && (
               <Image
