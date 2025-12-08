@@ -6,11 +6,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faXmark,
   faTriangleExclamation,
-  faCircleCheck
+  faCircleCheck,
+  faCalendarPlus
 } from '@awesome.me/kit-5c0a16ac00/icons/classic/solid';
 import { Button } from '@/components/Button';
 import { TextInput } from '@/components/TextInput';
 import { submitRSVP } from '@/app/actions/rsvp';
+import { downloadICSFile } from '@/utils/calendar';
 import type { Event } from '@/utils/event.types';
 import styles from './RSVPForm.module.css';
 
@@ -114,6 +116,13 @@ export function RSVPForm({ event }: RSVPFormProps) {
     }
   };
 
+  const handleAddToCalendar = () => {
+    downloadICSFile(event);
+  };
+
+  const hasAlreadyRSVPd = submitError.includes("already RSVP'd");
+  const showCalendarButton = isSubmitted || hasAlreadyRSVPd;
+
   const modalContent = showEmailInput && (
     <div
       className={styles.overlay}
@@ -136,10 +145,20 @@ export function RSVPForm({ event }: RSVPFormProps) {
         </header>
 
         {isSubmitted && (
-          <div className={styles.successMessage} role="status" aria-live="polite">
-            <FontAwesomeIcon icon={faCircleCheck} />
-            Thank you! Your RSVP has been received.
-          </div>
+          <>
+            <div className={styles.successMessage} role="status" aria-live="polite">
+              <FontAwesomeIcon icon={faCircleCheck} />
+              Thank you! Your RSVP has been received.
+            </div>
+            <Button
+              variant="outline"
+              className={styles.calendarButton}
+              onClick={handleAddToCalendar}
+            >
+              <FontAwesomeIcon icon={faCalendarPlus} className={styles.calendarIcon} />
+              ADD TO CALENDAR
+            </Button>
+          </>
         )}
 
         {!isSubmitted && (
@@ -161,25 +180,40 @@ export function RSVPForm({ event }: RSVPFormProps) {
                 errors={emailError ? [emailError] : undefined}
                 autoFocus={showEmailInput}
                 id="rsvp-email"
-                disabled={isSubmitting}
+                disabled={isSubmitting || hasAlreadyRSVPd}
                 required
               />
               {submitError && (
-                <div className={styles.errorMessage} role="alert">
-                  <FontAwesomeIcon icon={faTriangleExclamation} />
-                  {submitError}
-                </div>
+                <>
+                  <div className={styles.errorMessage} role="alert">
+                    <FontAwesomeIcon icon={faTriangleExclamation} />
+                    {submitError}
+                  </div>
+                  {hasAlreadyRSVPd && (
+                    <Button
+                      variant="outline"
+                      className={styles.calendarButton}
+                      onClick={handleAddToCalendar}
+                      type="button"
+                    >
+                      <FontAwesomeIcon icon={faCalendarPlus} className={styles.calendarIcon} />
+                      ADD TO CALENDAR
+                    </Button>
+                  )}
+                </>
               )}
             </div>
 
-            <Button
-              type="submit"
-              color="secondary"
-              className={styles.overlaySubmitButton}
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? 'SUBMITTING...' : 'CONFIRM RSVP'}
-            </Button>
+            {!hasAlreadyRSVPd && (
+              <Button
+                type="submit"
+                color="secondary"
+                className={styles.overlaySubmitButton}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'SUBMITTING...' : 'CONFIRM RSVP'}
+              </Button>
+            )}
           </form>
         )}
       </div>
