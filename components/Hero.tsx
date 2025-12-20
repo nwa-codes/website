@@ -31,7 +31,7 @@ export const Hero = ({ nextEvent, hasPastEvents, lastEvent }: HeroProps): JSX.El
   // If no upcoming event, show default background with message
   if (!nextEvent) {
     const backgroundImageStyle: BackgroundImageStyle = {
-      '--background-image': `url('/events/default-event-background.jpg')`
+      '--background-image': `url('https://res.cloudinary.com/dmrl9ghse/image/upload/v1766183818/default-event-background_ki85fy.jpg')`
     };
 
     const displayMonth = determineDisplayMonth(lastEvent);
@@ -57,13 +57,12 @@ export const Hero = ({ nextEvent, hasPastEvents, lastEvent }: HeroProps): JSX.El
     );
   }
 
-  const speaker = nextEvent.speaker;
   const formattedDate = formatInTimeZone(
     new Date(nextEvent.date),
     'America/Chicago',
     'EEE, MMM d, yyyy, h:mm a'
   );
-  const backgroundImage = nextEvent.imageUrl || '/events/default-event-background.jpg';
+  const backgroundImage = nextEvent.imageUrl || 'https://res.cloudinary.com/dmrl9ghse/image/upload/v1766183818/default-event-background_ki85fy.jpg';
 
   const backgroundImageStyle: BackgroundImageStyle = {
     '--background-image': `url('${backgroundImage}')`
@@ -82,21 +81,25 @@ export const Hero = ({ nextEvent, hasPastEvents, lastEvent }: HeroProps): JSX.El
         <h1 className={styles.heroTitle}>{nextEvent.title}</h1>
 
         <dl className={styles.eventDetails}>
-          {speaker?.name && (
+          {(nextEvent.speakers?.length ?? 0) > 0 && (
             <div className={styles.speakerInfo}>
-              <dt className="sr-only">Speaker</dt>
-              <dd>
-                <Image
-                  src={speaker.imageUrl || '/placeholder.svg?height=60&width=60'}
-                  alt={`${speaker.name}, Speaker`}
-                  width={72}
-                  height={72}
-                  className={styles.speakerAvatar}
-                />
-                <div>
-                  <div className={styles.speakerName}>{speaker.name}</div>
-                  <div className={styles.speakerTitle}>{speaker.speakerTitle}</div>
-                </div>
+              <dt className="sr-only">Speaker{(nextEvent.speakers?.length ?? 0) > 1 ? 's' : ''}</dt>
+              <dd className={styles.speakersList}>
+                {nextEvent.speakers?.map((speaker) => (
+                  <div key={speaker.id} className={styles.speakerItem}>
+                    <Image
+                      src={speaker.imageUrl || '/placeholder.svg?height=60&width=60'}
+                      alt={`${speaker.name}, Speaker`}
+                      width={72}
+                      height={72}
+                      className={styles.speakerAvatar}
+                    />
+                    <div className={styles.speakerDetails}>
+                      <div className={styles.speakerName}>{speaker.name}</div>
+                      <div className={styles.speakerTitle}>{speaker.speakerTitle}</div>
+                    </div>
+                  </div>
+                ))}
               </dd>
             </div>
           )}

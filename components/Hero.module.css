@@ -13,7 +13,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: var(--background-image, url('/events/default-event-background.jpg'));
+  background-image: var(--background-image, url('https://res.cloudinary.com/dmrl9ghse/image/upload/v1766183818/default-event-background_ki85fy.jpg'));
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -97,7 +97,23 @@
   gap: 16px;
 }
 
-.speakerInfo dd,
+.speakersList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.speakerItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.speakerDetails {
+  display: flex;
+  flex-direction: column;
+}
+
 .locationInfo dd {
   display: flex;
   align-items: center;
@@ -221,6 +237,11 @@
   .speakerInfo,
   .locationInfo {
     flex: 1;
+  }
+
+  .speakersList {
+    flex-direction: row;
+    gap: 24px;
   }
 
   .speakerAvatar {

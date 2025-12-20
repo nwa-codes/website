@@ -24,7 +24,6 @@ const sortDatesDesc = (firstEvent: Event, secondEvent: Event) =>
 
 export async function getEventsData() {
   const allEvents = await getEvents();
-  console.log('all events', allEvents);
   const now = new Date();
 
   const futureEvents = allEvents

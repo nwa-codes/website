@@ -1,8 +1,10 @@
 'use client';
+import { useState } from 'react';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay } from '@awesome.me/kit-5c0a16ac00/icons/classic/solid';
+import { faPlay, faChevronRight } from '@awesome.me/kit-5c0a16ac00/icons/classic/solid';
 import { Button } from './Button';
+import { EventModal } from './EventModal';
 import type { Event } from '@/utils/event.types';
 import styles from './EventCard.module.css';
 import { formatInTimeZone } from 'date-fns-tz';
@@ -15,7 +17,8 @@ interface EventCardProps {
 type BackgroundImageStyle = React.CSSProperties & { '--background-image': string };
 
 export function EventCard({ event }: EventCardProps): JSX.Element {
-  const backgroundImage = event.imageUrl || '/events/default-event-background.jpg';
+  const [showModal, setShowModal] = useState(false);
+  const backgroundImage = event.imageUrl || 'https://res.cloudinary.com/dmrl9ghse/image/upload/v1766183818/default-event-background_ki85fy.jpg';
   const formattedDate = formatInTimeZone(
     new Date(event.date),
     'America/Chicago',
@@ -26,7 +29,12 @@ export function EventCard({ event }: EventCardProps): JSX.Element {
     '--background-image': `url('${backgroundImage}')`
   };
 
+  const hasMoreInfo = (event.photos?.length ?? 0) > 0 || !!event.videoUrl;
+  const displaySpeakers = event.speakers?.slice(0, 3) ?? [];
+  const additionalSpeakersCount = Math.max(0, (event.speakers?.length ?? 0) - 3);
+
   return (
+    <>
     <article className={styles.eventCard} aria-labelledby={`event-title-${event.id}`}>
       <div
         className={styles.eventImageContainer}
@@ -44,36 +52,52 @@ export function EventCard({ event }: EventCardProps): JSX.Element {
             </h3>
           </div>
           <div className={styles.buttonSection}>
-            {event.videoUrl && (
-              <a
-                href={event.videoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.watchLink}
+            {hasMoreInfo && (
+              <Button
+                variant="outline"
+                className={styles.moreInfoButton}
+                onClick={() => setShowModal(true)}
+                aria-label={`View more information about ${event.title}`}
               >
-                <Button
-                  variant="outline"
-                  className={styles.watchButton}
-                  aria-label={`Watch ${event.title} video`}
-                >
-                  WATCH
-                  <FontAwesomeIcon icon={faPlay} className={styles.playIcon} aria-hidden="true" />
-                </Button>
-              </a>
+                MORE INFO
+                <FontAwesomeIcon icon={faChevronRight} className={styles.chevronIcon} aria-hidden="true" />
+              </Button>
             )}
-            {event.speaker?.name && (
-              <Image
-                src={event.speaker.imageUrl || '/placeholder.svg'}
-                alt={`${event.speaker.name}, Speaker`}
-                width={48}
-                height={48}
-                className={styles.eventSpeaker}
-                title={event.speaker.name}
-              />
+            {displaySpeakers.length > 0 && (
+              <div className={styles.speakerAvatars} aria-label="Event speakers">
+                {displaySpeakers.map((speaker, index) => (
+                  <Image
+                    key={speaker.id}
+                    src={speaker.imageUrl || '/placeholder.svg'}
+                    alt={`${speaker.name}, Speaker`}
+                    width={48}
+                    height={48}
+                    className={styles.speakerAvatar}
+                    style={{ zIndex: displaySpeakers.length - index }}
+                    title={speaker.name}
+                  />
+                ))}
+                {additionalSpeakersCount > 0 && (
+                  <div
+                    className={styles.additionalSpeakers}
+                    aria-label={`${additionalSpeakersCount} more speaker${additionalSpeakersCount > 1 ? 's' : ''}`}
+                  >
+                    +{additionalSpeakersCount}
+                  </div>
+                )}
+              </div>
             )}
           </div>
         </header>
       </div>
     </article>
+
+      {showModal && (
+        <EventModal
+          event={event}
+          onClose={() => setShowModal(false)}
+        />
+      )}
+    </>
   );
 }

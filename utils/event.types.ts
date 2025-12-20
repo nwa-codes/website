@@ -1,4 +1,5 @@
 export type Speaker = {
+  id: string;
   name: string;
   speakerTitle: string;
   imageUrl: string;
@@ -14,7 +15,8 @@ export type Event = {
   date: string;
   title: string;
   imageUrl?: string;
-  speaker?: Speaker;
+  speakers?: Speaker[];
+  photos?: string[];
   venue: Venue;
   videoUrl?: string;
   sponsoredBy?: string[];
@@ -26,7 +28,8 @@ export type MockEvent = {
   date: string;
   title: string;
   imageUrl?: string;
-  speaker?: Speaker;
+  speakers?: Speaker[];
+  photos?: string[];
   venue: Venue;
   videoUrl?: string;
   sponsoredBy?: string;

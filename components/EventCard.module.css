@@ -1,12 +1,13 @@
 .eventCard {
   background-color: #1d1d1d;
   overflow: hidden;
-  transition: background-color 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
   height: 176px;
 }
 
 .eventCard:hover {
-  background-color: #151515;
+  transform: scale(1.025);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 .eventImageContainer {
@@ -23,7 +24,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: var(--background-image, url('/events/default-event-background.jpg'));
+  background-image: var(--background-image, url('https://res.cloudinary.com/dmrl9ghse/image/upload/v1766183818/default-event-background_ki85fy.jpg'));
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -49,39 +50,52 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.watchLink {
-  text-decoration: none;
-  color: inherit;
-  display: inline-block;
-}
-
-.watchButton {
-  padding: 12px 24px;
   gap: 8px;
 }
 
-.watchButton:focus {
-  outline: 2px solid white;
-  outline-offset: 2px;
+.moreInfoButton {
+  padding: 12px 24px;
+  gap: 8px;
+  white-space: nowrap;
 }
 
-.watchButton:focus-visible {
-  outline: 2px solid white;
-  outline-offset: 2px;
+.chevronIcon {
+  width: 12px;
+  height: 12px;
 }
 
-.playIcon {
-  width: 14px;
-  height: 14px;
+.speakerAvatars {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  position: relative;
 }
 
-.eventSpeaker {
+.speakerAvatar {
   border-radius: 50%;
   width: 48px;
   height: 48px;
-  margin-left: auto;
+  border: 1.5px solid white;
+  margin-left: -12px;
+}
+
+.speakerAvatar:first-child {
+  margin-left: 0;
+}
+
+.additionalSpeakers {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 1.5px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: -12px;
 }
 
 .eventContent {
@@ -117,19 +131,9 @@
     height: 208px;
   }
 
-
-  .watchButton {
-    padding: 12px 24px;
-  }
-
-  .playIcon {
-    width: 16px;
-    height: 16px;
-  }
-
-  .eventSpeaker {
-    width: 48px;
-    height: 48px;
+  .chevronIcon {
+    width: 14px;
+    height: 14px;
   }
 
   .eventContent {
