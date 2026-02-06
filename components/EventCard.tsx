@@ -6,6 +6,7 @@ import { faPlay, faChevronRight } from '@awesome.me/kit-5c0a16ac00/icons/classic
 import { Button } from './Button';
 import { EventModal } from './EventModal';
 import type { Event } from '@/utils/event.types';
+import { getAvatarUrl } from '@/utils/cloudinary-client';
 import styles from './EventCard.module.css';
 import { formatInTimeZone } from 'date-fns-tz';
 import type { JSX } from 'react';
@@ -68,7 +69,7 @@ export function EventCard({ event }: EventCardProps): JSX.Element {
                 {displaySpeakers.map((speaker, index) => (
                   <Image
                     key={speaker.id}
-                    src={speaker.imageUrl || '/placeholder.svg'}
+                    src={getAvatarUrl(speaker.imageUrl || '/placeholder.svg', 48)}
                     alt={`${speaker.name}, Speaker`}
                     width={48}
                     height={48}

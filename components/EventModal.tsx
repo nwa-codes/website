@@ -8,6 +8,7 @@ import { faXmark, faLocationDot, faPlay } from '@awesome.me/kit-5c0a16ac00/icons
 import { Button } from '@/components/Button';
 import { PhotoLightbox } from '@/components/PhotoLightbox';
 import type { Event } from '@/utils/event.types';
+import { getAvatarUrl } from '@/utils/cloudinary-client';
 import { formatInTimeZone } from 'date-fns-tz';
 import styles from './EventModal.module.css';
 
@@ -101,7 +102,7 @@ export function EventModal({ event, onClose }: EventModalProps) {
                 {event.speakers?.map((speaker) => (
                   <div key={speaker.id} className={styles.speakerItem}>
                     <Image
-                      src={speaker.imageUrl || '/placeholder.svg'}
+                      src={getAvatarUrl(speaker.imageUrl || '/placeholder.svg', 60)}
                       alt={speaker.name}
                       width={60}
                       height={60}

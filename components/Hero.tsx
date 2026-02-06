@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@awesome.me/kit-5c0a16ac00/icons/classic/solid';
 import { RSVPForm } from '@/components/RSVPForm';
 import { ScrollIndicator } from '@/components/ScrollIndicator';
+import { getAvatarUrl } from '@/utils/cloudinary-client';
 import styles from './Hero.module.css';
 import type { Event } from '@/utils/event.types';
 import { format, addMonths, parseISO, isAfter } from 'date-fns';
@@ -88,7 +89,7 @@ export const Hero = ({ nextEvent, hasPastEvents, lastEvent }: HeroProps): JSX.El
                 {nextEvent.speakers?.map((speaker) => (
                   <div key={speaker.id} className={styles.speakerItem}>
                     <Image
-                      src={speaker.imageUrl || '/placeholder.svg?height=60&width=60'}
+                      src={getAvatarUrl(speaker.imageUrl || '/placeholder.svg?height=60&width=60', 72)}
                       alt={`${speaker.name}, Speaker`}
                       width={72}
                       height={72}

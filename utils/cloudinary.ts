@@ -40,3 +40,4 @@ export function getThumbnailUrl(url: string, width: number = 400, height: number
   // For non-Cloudinary URLs, return as-is (fallback)
   return url;
 }
+
