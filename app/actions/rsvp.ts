@@ -1,28 +1,34 @@
 'use server';
 
-import { createRSVP, checkExistingRSVP } from '@/utils/airtable';
+type RSVPResult = { success: true } | { success: false; error: string };
 
-export async function submitRSVP(
-  eventId: string,
-  email: string
-): Promise<{ success: boolean; error?: string }> {
-  try {
-    const hasRSVP = await checkExistingRSVP(eventId, email);
+/**
+ * Submits an RSVP for an event to the Atlas API.
+ * Returns a 409 if the email is already registered, 404 if the event is not
+ * found, and a generic error for any other non-2xx response.
+ */
+export const submitRSVP = async (eventId: string, email: string): Promise<RSVPResult> => {
+  const response = await fetch(`${process.env.ATLAS_API_URL}/api/events/${eventId}/rsvps`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': process.env.ATLAS_API_KEY ?? ''
+    },
+    body: JSON.stringify({ email, source: 'website' }),
+    cache: 'no-store'
+  });
 
-    if (hasRSVP) {
-      return {
-        success: false,
-        error: "You've already RSVP'd for this event."
-      };
-    }
-
-    await createRSVP(eventId, email);
-    return { success: true };
-  } catch (error) {
-    console.error('Failed to submit RSVP:', error);
-    return {
-      success: false,
-      error: 'Failed to submit RSVP. Please try again.'
-    };
+  if (response.status === 409) {
+    return { success: false, error: 'already_registered' };
   }
-}
+
+  if (response.status === 404) {
+    return { success: false, error: 'event_not_found' };
+  }
+
+  if (!response.ok) {
+    return { success: false, error: 'submission_failed' };
+  }
+
+  return { success: true };
+};
