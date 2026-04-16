@@ -9,9 +9,17 @@ type ApiSpeaker = {
   socialLinks?: unknown;
 };
 
-type ApiSponsor = {
+type ApiSponsorRecord = {
+  id: number;
   name: string;
   logoUrl?: string | null;
+  websiteUrl?: string | null;
+};
+
+export type ApiSponsor = {
+  sponsorshipType: string;
+  displayOrder: number;
+  sponsor: ApiSponsorRecord;
 };
 
 type ApiEvent = {
@@ -38,11 +46,11 @@ const sponsorLogoMap: Record<string, string> = {
  * Resolves a logo path for a sponsor, preferring the API-provided logoUrl
  * and falling back to the local sponsorLogoMap.
  */
-const resolveLogoPath = (sponsor: ApiSponsor): string | null => {
-  if (sponsor.logoUrl) {
-    return sponsor.logoUrl;
+const resolveLogoPath = (sponsorEntry: ApiSponsor): string | null => {
+  if (sponsorEntry.sponsor.logoUrl) {
+    return sponsorEntry.sponsor.logoUrl;
   }
-  return sponsorLogoMap[sponsor.name] ?? null;
+  return sponsorLogoMap[sponsorEntry.sponsor.name] ?? null;
 };
 
 /**
@@ -73,7 +81,7 @@ const mapApiEventToEvent = (apiEvent: ApiEvent): Event => {
 
   const sponsorNames =
     apiEvent.sponsors && apiEvent.sponsors.length > 0
-      ? apiEvent.sponsors.map((sponsor) => sponsor.name)
+      ? apiEvent.sponsors.map((sponsorEntry) => sponsorEntry.sponsor.name)
       : undefined;
 
   const resolvedLogos = apiEvent.sponsors
@@ -146,6 +154,48 @@ export const getEvents = async (): Promise<{ nextEvent: Event | null; pastEvents
   const pastEvents = mapped.filter((event: Event) => new Date(event.date) < now);
 
   return { nextEvent, pastEvents };
+};
+
+/**
+ * Hardcoded logo overrides for the partners section only.
+ * These take precedence over the API logoUrl when rendering sponsor partnerships.
+ */
+const partnerLogoOverrides: Record<string, string> = {
+  'Sleepy Fox': '/sponsors/sleepy-fox-logo.svg',
+};
+
+/**
+ * Fetches the full list of sponsors from the Atlas API.
+ * Returns an empty array if the request fails.
+ */
+export const getSponsors = async (): Promise<ApiSponsor[]> => {
+  const response = await fetch(`${process.env.ATLAS_API_URL}/api/sponsors`, {
+    next: { revalidate: 3600 },
+  });
+
+  if (!response.ok) {
+    return [];
+  }
+
+  const { sponsors } = await response.json();
+  return sponsors as ApiSponsor[];
+};
+
+/**
+ * Resolves a logo path for the partners section, applying any hardcoded
+ * partner logo overrides (e.g. Sleepy Fox uses the larger partnership logo).
+ * Falls back to the API logoUrl, then to the global sponsorLogoMap.
+ * Returns null if no logo is available.
+ */
+export const resolvePartnerLogoPath = (sponsorEntry: ApiSponsor): string | null => {
+  const name = sponsorEntry.sponsor.name;
+  if (partnerLogoOverrides[name]) {
+    return partnerLogoOverrides[name];
+  }
+  if (sponsorEntry.sponsor.logoUrl) {
+    return sponsorEntry.sponsor.logoUrl;
+  }
+  return sponsorLogoMap[name] ?? null;
 };
 
 /**
