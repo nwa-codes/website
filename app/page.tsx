@@ -6,23 +6,11 @@ import { ContactFormWrapper } from '@/components/ContactFormWrapper';
 import { Footer } from '@/components/Footer';
 import Image from 'next/image';
 import { getEventsData } from '@/app/actions/events';
-import { getSponsors, resolvePartnerLogoPath } from '@/utils/atlas-api';
 import styles from './page.module.css';
 import type { JSX } from 'react';
 
 export default async function Component(): Promise<JSX.Element> {
-  const [{ nextEvent, pastEvents, showLoadMore, hasPastEvents, lastEvent }, sponsors] =
-    await Promise.all([getEventsData(), getSponsors()]);
-
-  const partnersWithLogos = sponsors
-    .map((sponsor) => ({
-      name: sponsor.name,
-      logoPath: resolvePartnerLogoPath(sponsor),
-      websiteUrl: sponsor.websiteUrl,
-    }))
-    .filter((partner): partner is { name: string; logoPath: string; websiteUrl: string | null | undefined } =>
-      partner.logoPath !== null
-    );
+  const { nextEvent, pastEvents, showLoadMore, hasPastEvents, lastEvent } = await getEventsData();
 
   return (
     <div className={styles.container}>
@@ -50,18 +38,17 @@ export default async function Component(): Promise<JSX.Element> {
           </section>
         )}
 
-        {partnersWithLogos.length > 0 ? (
-          <section className={styles.partnership}>
-            <h2 className={styles.partnershipTitle}>In Proud Partnership With</h2>
-            <ul className={styles.partners}>
-              {partnersWithLogos.map((partner) => (
-                <li key={partner.name} className={styles.partnerLogo}>
-                  <Image src={partner.logoPath} alt={partner.name} width={160} height={80} />
-                </li>
-              ))}
-            </ul>
-          </section>
-        ) : null}
+        <section className={styles.partnership}>
+          <h2 className={styles.partnershipTitle}>In Proud Partnership With</h2>
+          <ul className={styles.partners}>
+            <li className={styles.partnerLogo}>
+              <Image src="/sponsors/sleepy-fox-logo.svg" alt="Sleepy Fox" width={160} height={80} />
+            </li>
+            <li className={styles.partnerLogo}>
+              <Image src="/sponsors/akra-logo.svg" alt="Akra Collective" width={160} height={80} />
+            </li>
+          </ul>
+        </section>
 
         <ContactFormWrapper />
       </main>

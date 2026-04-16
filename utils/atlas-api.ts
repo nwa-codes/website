@@ -156,46 +156,6 @@ export const getEvents = async (): Promise<{ nextEvent: Event | null; pastEvents
   return { nextEvent, pastEvents };
 };
 
-/**
- * Hardcoded logo overrides for the partners section only.
- * These take precedence over the API logoUrl when rendering sponsor partnerships.
- */
-const partnerLogoOverrides: Record<string, string> = {
-  'Sleepy Fox': '/sponsors/sleepy-fox-logo.svg',
-};
-
-/**
- * Fetches the full list of sponsors from the Atlas API.
- * Returns an empty array if the request fails.
- */
-export const getSponsors = async (): Promise<ApiSponsorRecord[]> => {
-  const response = await fetch(`${process.env.ATLAS_API_URL}/api/sponsors`, {
-    next: { revalidate: 3600 },
-  });
-
-  if (!response.ok) {
-    return [];
-  }
-
-  const { sponsors } = await response.json();
-  return sponsors as ApiSponsorRecord[];
-};
-
-/**
- * Resolves a logo path for the partners section, applying any hardcoded
- * partner logo overrides (e.g. Sleepy Fox uses the larger partnership logo).
- * Falls back to the API logoUrl, then to the global sponsorLogoMap.
- * Returns null if no logo is available.
- */
-export const resolvePartnerLogoPath = (sponsor: ApiSponsorRecord): string | null => {
-  if (partnerLogoOverrides[sponsor.name]) {
-    return partnerLogoOverrides[sponsor.name];
-  }
-  if (sponsor.logoUrl) {
-    return sponsor.logoUrl;
-  }
-  return sponsorLogoMap[sponsor.name] ?? null;
-};
 
 /**
  * Fetches a single event by ID from the Atlas API.
