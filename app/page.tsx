@@ -45,7 +45,7 @@ export default async function Component(): Promise<JSX.Element> {
               <Image src="/sponsors/sleepy-fox-logo.svg" alt="Sleepy Fox" width={160} height={80} />
             </li>
             <li className={styles.partnerLogo}>
-              <Image src="/sponsors/akra-logo.svg" alt="Akra" width={160} height={80} />
+              <Image src="/sponsors/akra-logo.svg" alt="Akra Collective" width={160} height={80} />
             </li>
           </ul>
         </section>

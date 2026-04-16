@@ -123,9 +123,9 @@ export const Hero = ({ nextEvent, hasPastEvents, lastEvent }: HeroProps): JSX.El
 
         <div className={styles.heroActions}>
           <RSVPForm event={nextEvent} />
-          {nextEvent.sponsoredBy &&
+          {nextEvent.sponsoredBy != null &&
             nextEvent.sponsoredBy.length > 0 &&
-            nextEvent.sponsoredByLogos && (
+            nextEvent.sponsoredByLogos != null && (
               <aside className={styles.sponsorInfo} aria-label="Event sponsors">
                 <span>Sponsored By:</span>
                 {nextEvent.sponsoredByLogos.map((logo, index) => (

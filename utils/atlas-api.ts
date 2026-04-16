@@ -9,9 +9,17 @@ type ApiSpeaker = {
   socialLinks?: unknown;
 };
 
-type ApiSponsor = {
+type ApiSponsorRecord = {
+  id: number;
   name: string;
   logoUrl?: string | null;
+  websiteUrl?: string | null;
+};
+
+export type ApiSponsor = {
+  sponsorshipType: string;
+  displayOrder: number;
+  sponsor: ApiSponsorRecord;
 };
 
 type ApiEvent = {
@@ -38,11 +46,11 @@ const sponsorLogoMap: Record<string, string> = {
  * Resolves a logo path for a sponsor, preferring the API-provided logoUrl
  * and falling back to the local sponsorLogoMap.
  */
-const resolveLogoPath = (sponsor: ApiSponsor): string | null => {
-  if (sponsor.logoUrl) {
-    return sponsor.logoUrl;
+const resolveLogoPath = (sponsorEntry: ApiSponsor): string | null => {
+  if (sponsorEntry.sponsor.logoUrl) {
+    return sponsorEntry.sponsor.logoUrl;
   }
-  return sponsorLogoMap[sponsor.name] ?? null;
+  return sponsorLogoMap[sponsorEntry.sponsor.name] ?? null;
 };
 
 /**
@@ -73,7 +81,7 @@ const mapApiEventToEvent = (apiEvent: ApiEvent): Event => {
 
   const sponsorNames =
     apiEvent.sponsors && apiEvent.sponsors.length > 0
-      ? apiEvent.sponsors.map((sponsor) => sponsor.name)
+      ? apiEvent.sponsors.map((sponsorEntry) => sponsorEntry.sponsor.name)
       : undefined;
 
   const resolvedLogos = apiEvent.sponsors
@@ -147,6 +155,7 @@ export const getEvents = async (): Promise<{ nextEvent: Event | null; pastEvents
 
   return { nextEvent, pastEvents };
 };
+
 
 /**
  * Fetches a single event by ID from the Atlas API.
