@@ -15,10 +15,10 @@ export default async function Component(): Promise<JSX.Element> {
     await Promise.all([getEventsData(), getSponsors()]);
 
   const partnersWithLogos = sponsors
-    .map((sponsorEntry) => ({
-      name: sponsorEntry.sponsor.name,
-      logoPath: resolvePartnerLogoPath(sponsorEntry),
-      websiteUrl: sponsorEntry.sponsor.websiteUrl,
+    .map((sponsor) => ({
+      name: sponsor.name,
+      logoPath: resolvePartnerLogoPath(sponsor),
+      websiteUrl: sponsor.websiteUrl,
     }))
     .filter((partner): partner is { name: string; logoPath: string; websiteUrl: string | null | undefined } =>
       partner.logoPath !== null

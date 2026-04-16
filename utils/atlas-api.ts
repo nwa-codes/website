@@ -168,7 +168,7 @@ const partnerLogoOverrides: Record<string, string> = {
  * Fetches the full list of sponsors from the Atlas API.
  * Returns an empty array if the request fails.
  */
-export const getSponsors = async (): Promise<ApiSponsor[]> => {
+export const getSponsors = async (): Promise<ApiSponsorRecord[]> => {
   const response = await fetch(`${process.env.ATLAS_API_URL}/api/sponsors`, {
     next: { revalidate: 3600 },
   });
@@ -178,7 +178,7 @@ export const getSponsors = async (): Promise<ApiSponsor[]> => {
   }
 
   const { sponsors } = await response.json();
-  return sponsors as ApiSponsor[];
+  return sponsors as ApiSponsorRecord[];
 };
 
 /**
@@ -187,15 +187,14 @@ export const getSponsors = async (): Promise<ApiSponsor[]> => {
  * Falls back to the API logoUrl, then to the global sponsorLogoMap.
  * Returns null if no logo is available.
  */
-export const resolvePartnerLogoPath = (sponsorEntry: ApiSponsor): string | null => {
-  const name = sponsorEntry.sponsor.name;
-  if (partnerLogoOverrides[name]) {
-    return partnerLogoOverrides[name];
+export const resolvePartnerLogoPath = (sponsor: ApiSponsorRecord): string | null => {
+  if (partnerLogoOverrides[sponsor.name]) {
+    return partnerLogoOverrides[sponsor.name];
   }
-  if (sponsorEntry.sponsor.logoUrl) {
-    return sponsorEntry.sponsor.logoUrl;
+  if (sponsor.logoUrl) {
+    return sponsor.logoUrl;
   }
-  return sponsorLogoMap[name] ?? null;
+  return sponsorLogoMap[sponsor.name] ?? null;
 };
 
 /**
