@@ -123,21 +123,15 @@ export const Hero = ({ nextEvent, hasPastEvents, lastEvent }: HeroProps): JSX.El
 
         <div className={styles.heroActions}>
           <RSVPForm event={nextEvent} />
-          {nextEvent.sponsoredBy &&
-            nextEvent.sponsoredBy.length > 0 &&
-            nextEvent.sponsoredByLogos && (
-              <aside className={styles.sponsorInfo} aria-label="Event sponsors">
-                <span>Sponsored By:</span>
-                {nextEvent.sponsoredByLogos.map((logo, index) => (
-                  <img
-                    key={index}
-                    src={logo}
-                    alt={`${nextEvent.sponsoredBy![index]} logo`}
-                    className={styles.sponsorLogo}
-                  />
-                ))}
-              </aside>
-            )}
+          {/* TODO: Remove hardcoded test sponsor before merging */}
+          <aside className={styles.sponsorInfo} aria-label="Event sponsors">
+            <span>Sponsored By:</span>
+            <img
+              src="/sponsors/ua-collaborative-logo.png"
+              alt="U of A Collaborative logo"
+              className={styles.sponsorLogo}
+            />
+          </aside>
         </div>
       </header>
 
