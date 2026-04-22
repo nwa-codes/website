@@ -59,8 +59,6 @@
   .table,
   .table thead,
   .table tbody,
-  .table th,
-  .table td,
   .table tr {
     display: block;
   }
