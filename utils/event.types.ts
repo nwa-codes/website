@@ -36,3 +36,46 @@ export type MockEvent = {
   sponsoredByLogo?: string;
   imageCredit?: string;
 };
+
+export type AdminSpeaker = {
+  id: string;
+  name: string;
+  speakerTitle: string;
+  bio: string | null;
+  imageUrl: string | null;
+  socialLinks: {
+    twitter?: string;
+    linkedin?: string;
+    github?: string;
+    website?: string;
+  } | null;
+  active: boolean;
+};
+
+export type AdminSponsor = {
+  id: string;
+  name: string;
+  logoUrl: string | null;
+  websiteUrl: string | null;
+  tier: string;
+  active: boolean;
+};
+
+export type AdminEvent = {
+  id: string;
+  title: string;
+  description: string | null;
+  eventStartTime: string;
+  eventEndTime: string | null;
+  venueName: string | null;
+  venueAddress: string | null;
+  imageUrl: string | null;
+  videoUrl: string | null;
+  photoUrls: string[];
+  status: 'draft' | 'published' | 'completed' | 'cancelled';
+  tags: string[];
+  maxAttendees: number | null;
+  eventType: string | null;
+  speakers: AdminSpeaker[];
+  sponsors: AdminSponsor[];
+};

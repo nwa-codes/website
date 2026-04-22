@@ -1,0 +1,46 @@
+.page {
+  padding: 40px;
+}
+
+.heading {
+  color: white;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.subheading {
+  color: #c7c7c7;
+  font-size: 0.95rem;
+  margin-bottom: 40px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background-color: #1d1d1d;
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cardLabel {
+  color: #c7c7c7;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cardCount {
+  color: white;
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1;
+}

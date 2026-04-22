@@ -10,8 +10,11 @@
   },
   "dependencies": {
     "@awesome.me/kit-5c0a16ac00": "^1.0.7",
+    "@base-ui/react": "^1.4.1",
+    "@clerk/nextjs": "^7.2.3",
     "@fortawesome/fontawesome-svg-core": "^7.0.1",
     "@fortawesome/react-fontawesome": "^3.0.2",
+    "@hookform/resolvers": "^5.2.2",
     "cloudinary": "^2.8.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
@@ -20,6 +23,7 @@
     "next": "^15.3.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-hook-form": "^7.73.1",
     "resend": "^6.0.3",
     "zod": "^4.1.8"
   },

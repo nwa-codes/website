@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>): JSX.Element => {
   return (
-    <ClerkProvider>
+    <ClerkProvider afterSignInUrl="/admin" afterSignUpUrl="/admin">
       <html lang="en">
         <body className={raleway.className}>{children}</body>
       </html>
