@@ -9,6 +9,7 @@ import Image from 'next/image';
 import styles from './SignIn.module.css';
 
 type Step = 'identifier' | 'password' | 'email_code';
+type EmailCodeSource = 'first_factor' | 'second_factor';
 
 /**
  * Inspects supported first factors after identification to determine
@@ -36,6 +37,7 @@ const SignInPage = (): JSX.Element => {
   const router = useRouter();
 
   const [step, setStep] = useState<Step>('identifier');
+  const [emailCodeSource, setEmailCodeSource] = useState<EmailCodeSource>('first_factor');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [code, setCode] = useState('');
@@ -86,6 +88,7 @@ const SignInPage = (): JSX.Element => {
         setSubmitError(sendError.message);
         return;
       }
+      setEmailCodeSource('first_factor');
     }
 
     setStep(nextStep);
@@ -108,6 +111,7 @@ const SignInPage = (): JSX.Element => {
         setSubmitError(sendError.message);
         return;
       }
+      setEmailCodeSource('second_factor');
       setStep('email_code');
       return;
     }
@@ -129,7 +133,10 @@ const SignInPage = (): JSX.Element => {
     event.preventDefault();
     setSubmitError(null);
 
-    const { error } = await signIn.emailCode.verifyCode({ code });
+    const { error } =
+      emailCodeSource === 'second_factor'
+        ? await signIn.mfa.verifyEmailCode({ code })
+        : await signIn.emailCode.verifyCode({ code });
 
     if (error !== null) {
       setSubmitError(error.message);
