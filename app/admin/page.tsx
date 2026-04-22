@@ -1,5 +1,7 @@
 import type { JSX } from 'react';
 
+import { getAdminEvents, getAdminSpeakers, getAdminSponsors } from '@/utils/admin-api';
+
 import styles from './page.module.css';
 
 type SummaryCard = {
@@ -8,16 +10,16 @@ type SummaryCard = {
 };
 
 const getSummaryCounts = async (): Promise<SummaryCard[]> => {
-  const [eventsCount, speakersCount, sponsorsCount] = await Promise.all([
-    Promise.resolve(0),
-    Promise.resolve(0),
-    Promise.resolve(0),
+  const [events, speakers, sponsors] = await Promise.all([
+    getAdminEvents(),
+    getAdminSpeakers(),
+    getAdminSponsors(),
   ]);
 
   return [
-    { label: 'Events', count: eventsCount },
-    { label: 'Speakers', count: speakersCount },
-    { label: 'Sponsors', count: sponsorsCount },
+    { label: 'Events', count: events.length },
+    { label: 'Speakers', count: speakers.length },
+    { label: 'Sponsors', count: sponsors.length },
   ];
 };
 
