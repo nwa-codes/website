@@ -1,0 +1,16 @@
+.page {
+  padding: 40px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.heading {
+  color: white;
+  font-size: 1.75rem;
+  font-weight: 700;
+}
