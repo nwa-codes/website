@@ -10,6 +10,7 @@ import { FormField } from '@/components/admin/FormField';
 import { AdminSelect } from '@/components/admin/AdminSelect';
 import { ImageUpload } from '@/components/admin/ImageUpload';
 
+import { createSponsorAction, updateSponsorAction } from './actions';
 import type { SponsorFormValues } from './actions';
 import styles from './SponsorForm.module.css';
 
@@ -23,8 +24,8 @@ const SponsorFormSchema = z.object({
 type SponsorFormSchema = z.infer<typeof SponsorFormSchema>;
 
 type SponsorFormProps = {
+  sponsorId?: string;
   defaultValues?: Partial<SponsorFormValues>;
-  onSubmit: (data: SponsorFormValues) => Promise<void>;
   submitLabel: string;
 };
 
@@ -37,9 +38,9 @@ const TIER_OPTIONS = [
 
 /**
  * Shared form for creating and editing sponsors.
- * Handles validation via react-hook-form + zod and delegates submission to the parent action.
+ * When sponsorId is provided the form calls updateSponsorAction; otherwise createSponsorAction.
  */
-export const SponsorForm = ({ defaultValues, onSubmit, submitLabel }: SponsorFormProps): JSX.Element => {
+export const SponsorForm = ({ sponsorId, defaultValues, submitLabel }: SponsorFormProps): JSX.Element => {
   const [isPending, startTransition] = useTransition();
 
   const {
@@ -59,7 +60,11 @@ export const SponsorForm = ({ defaultValues, onSubmit, submitLabel }: SponsorFor
 
   const handleFormSubmit = (data: SponsorFormSchema) => {
     startTransition(async () => {
-      await onSubmit(data as SponsorFormValues);
+      if (sponsorId) {
+        await updateSponsorAction(sponsorId, data as SponsorFormValues);
+      } else {
+        await createSponsorAction(data as SponsorFormValues);
+      }
     });
   };
 

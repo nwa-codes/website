@@ -7,18 +7,9 @@ import { requireAdmin } from '@/lib/auth';
 import { createSpeaker, updateSpeaker, deactivateSpeaker } from '@/utils/admin-api';
 
 const SpeakerSchema = z.object({
-  name: z.string().min(1),
-  speakerTitle: z.string().min(1),
-  bio: z.string().optional(),
+  name: z.string().min(1, 'Name is required'),
+  speakerTitle: z.string().min(1, 'Title is required'),
   imageUrl: z.string().optional(),
-  socialLinks: z
-    .object({
-      twitter: z.string().optional(),
-      linkedin: z.string().optional(),
-      github: z.string().optional(),
-      website: z.string().optional(),
-    })
-    .optional(),
 });
 
 export type SpeakerFormValues = z.input<typeof SpeakerSchema>;

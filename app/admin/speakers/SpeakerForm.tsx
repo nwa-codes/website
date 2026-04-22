@@ -9,37 +9,29 @@ import { z } from 'zod';
 import { FormField } from '@/components/admin/FormField';
 import { ImageUpload } from '@/components/admin/ImageUpload';
 
+import { createSpeakerAction, updateSpeakerAction } from './actions';
 import type { SpeakerFormValues } from './actions';
 import styles from './SpeakerForm.module.css';
 
 const SpeakerFormSchema = z.object({
-  name: z.string().min(1),
-  speakerTitle: z.string().min(1),
-  bio: z.string().optional(),
+  name: z.string().min(1, 'Name is required'),
+  speakerTitle: z.string().min(1, 'Title is required'),
   imageUrl: z.string().optional(),
-  socialLinks: z
-    .object({
-      twitter: z.string().optional(),
-      linkedin: z.string().optional(),
-      github: z.string().optional(),
-      website: z.string().optional(),
-    })
-    .optional(),
 });
 
 type SpeakerFormSchema = z.infer<typeof SpeakerFormSchema>;
 
 type SpeakerFormProps = {
+  speakerId?: string;
   defaultValues?: Partial<SpeakerFormValues>;
-  onSubmit: (data: SpeakerFormValues) => Promise<void>;
   submitLabel: string;
 };
 
 /**
  * Shared form for creating and editing speakers.
- * Handles validation via react-hook-form + zod and delegates submission to the parent action.
+ * When speakerId is provided the form calls updateSpeakerAction; otherwise createSpeakerAction.
  */
-export const SpeakerForm = ({ defaultValues, onSubmit, submitLabel }: SpeakerFormProps): JSX.Element => {
+export const SpeakerForm = ({ speakerId, defaultValues, submitLabel }: SpeakerFormProps): JSX.Element => {
   const [isPending, startTransition] = useTransition();
 
   const {
@@ -52,26 +44,23 @@ export const SpeakerForm = ({ defaultValues, onSubmit, submitLabel }: SpeakerFor
     defaultValues: {
       name: defaultValues?.name ?? '',
       speakerTitle: defaultValues?.speakerTitle ?? '',
-      bio: defaultValues?.bio ?? '',
       imageUrl: defaultValues?.imageUrl ?? '',
-      socialLinks: {
-        twitter: defaultValues?.socialLinks?.twitter ?? '',
-        linkedin: defaultValues?.socialLinks?.linkedin ?? '',
-        github: defaultValues?.socialLinks?.github ?? '',
-        website: defaultValues?.socialLinks?.website ?? '',
-      },
     },
   });
 
   const handleFormSubmit = (data: SpeakerFormSchema) => {
     startTransition(async () => {
-      await onSubmit(data as SpeakerFormValues);
+      if (speakerId) {
+        await updateSpeakerAction(speakerId, data as SpeakerFormValues);
+      } else {
+        await createSpeakerAction(data as SpeakerFormValues);
+      }
     });
   };
 
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className={styles.form}>
-      <FormField label="Name" error={errors.name?.message}>
+      <FormField label="Name *" error={errors.name?.message}>
         <input
           {...register('name')}
           type="text"
@@ -80,21 +69,12 @@ export const SpeakerForm = ({ defaultValues, onSubmit, submitLabel }: SpeakerFor
         />
       </FormField>
 
-      <FormField label="Title" error={errors.speakerTitle?.message}>
+      <FormField label="Title *" error={errors.speakerTitle?.message}>
         <input
           {...register('speakerTitle')}
           type="text"
           className={styles.input}
           placeholder="e.g. Senior Engineer at Acme"
-        />
-      </FormField>
-
-      <FormField label="Bio" error={errors.bio?.message}>
-        <textarea
-          {...register('bio')}
-          className={styles.textarea}
-          rows={4}
-          placeholder="Short speaker bio"
         />
       </FormField>
 
@@ -109,42 +89,6 @@ export const SpeakerForm = ({ defaultValues, onSubmit, submitLabel }: SpeakerFor
               onChange={field.onChange}
             />
           )}
-        />
-      </FormField>
-
-      <FormField label="Twitter" error={errors.socialLinks?.twitter?.message}>
-        <input
-          {...register('socialLinks.twitter')}
-          type="text"
-          className={styles.input}
-          placeholder="https://twitter.com/handle"
-        />
-      </FormField>
-
-      <FormField label="LinkedIn" error={errors.socialLinks?.linkedin?.message}>
-        <input
-          {...register('socialLinks.linkedin')}
-          type="text"
-          className={styles.input}
-          placeholder="https://linkedin.com/in/handle"
-        />
-      </FormField>
-
-      <FormField label="GitHub" error={errors.socialLinks?.github?.message}>
-        <input
-          {...register('socialLinks.github')}
-          type="text"
-          className={styles.input}
-          placeholder="https://github.com/handle"
-        />
-      </FormField>
-
-      <FormField label="Website" error={errors.socialLinks?.website?.message}>
-        <input
-          {...register('socialLinks.website')}
-          type="text"
-          className={styles.input}
-          placeholder="https://example.com"
         />
       </FormField>
 

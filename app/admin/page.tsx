@@ -1,4 +1,5 @@
 import type { JSX } from 'react';
+import Link from 'next/link';
 
 import { getAdminEvents, getAdminSpeakers, getAdminSponsors } from '@/utils/admin-api';
 
@@ -7,6 +8,7 @@ import styles from './page.module.css';
 type SummaryCard = {
   label: string;
   count: number;
+  href: string;
 };
 
 const getSummaryCounts = async (): Promise<SummaryCard[]> => {
@@ -17,9 +19,9 @@ const getSummaryCounts = async (): Promise<SummaryCard[]> => {
   ]);
 
   return [
-    { label: 'Events', count: events.length },
-    { label: 'Speakers', count: speakers.length },
-    { label: 'Sponsors', count: sponsors.length },
+    { label: 'Events', count: events.length, href: '/admin/events' },
+    { label: 'Speakers', count: speakers.length, href: '/admin/speakers' },
+    { label: 'Sponsors', count: sponsors.length, href: '/admin/sponsors' },
   ];
 };
 
@@ -32,10 +34,10 @@ const AdminDashboard = async (): Promise<JSX.Element> => {
       <p className={styles.subheading}>Overview of your NWA Codes content</p>
       <div className={styles.cards}>
         {cards.map((card) => (
-          <div key={card.label} className={styles.card}>
+          <Link key={card.label} href={card.href} className={styles.card}>
             <span className={styles.cardLabel}>{card.label}</span>
             <span className={styles.cardCount}>{card.count}</span>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

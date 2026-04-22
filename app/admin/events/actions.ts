@@ -7,18 +7,11 @@ import { requireAdmin } from '@/lib/auth';
 import { createEvent, updateEvent, softDeleteEvent } from '@/utils/admin-api';
 
 const EventSchema = z.object({
-  title: z.string().min(1),
-  description: z.string().optional(),
-  eventStartTime: z.string().min(1),
-  eventEndTime: z.string().optional(),
-  venueName: z.string().optional(),
+  title: z.string().min(1, 'Title is required'),
+  eventStartTime: z.string().min(1, 'Start time is required'),
+  venueName: z.string().min(1, 'Venue name is required'),
   venueAddress: z.string().optional(),
-  status: z.enum(['draft', 'published', 'completed', 'cancelled']),
-  eventType: z.string().optional(),
-  tags: z
-    .string()
-    .transform((val) => val.split(',').map((segment) => segment.trim()).filter(Boolean)),
-  maxAttendees: z.coerce.number().optional(),
+  status: z.enum(['draft', 'published', 'completed', 'cancelled'], { errorMap: () => ({ message: 'Status is required' }) }),
   imageUrl: z.string().optional(),
   videoUrl: z.string().optional(),
   speakers: z.array(z.unknown()).optional(),
@@ -29,12 +22,14 @@ export type EventFormValues = z.input<typeof EventSchema>;
 
 /**
  * Creates a new event and redirects to the events list on success.
+ * Automatically sets eventEndTime to 2 hours after eventStartTime.
  * Requires admin authentication.
  */
 export const createEventAction = async (payload: EventFormValues): Promise<void> => {
   await requireAdmin();
   const parsed = EventSchema.parse(payload);
-  await createEvent(parsed);
+  const endTime = new Date(new Date(parsed.eventStartTime).getTime() + 2 * 60 * 60 * 1000).toISOString();
+  await createEvent({ ...parsed, eventEndTime: endTime });
   redirect('/admin/events');
 };
 
