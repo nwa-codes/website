@@ -1,8 +1,12 @@
 'use client';
 
 import type { JSX } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { SignOutButton } from '@clerk/nextjs';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHouse, faArrowRightFromBracket } from '@awesome.me/kit-5c0a16ac00/icons/classic/solid';
 
 import styles from './AdminSidebar.module.css';
 
@@ -28,8 +32,14 @@ export const AdminSidebar = (): JSX.Element => {
   return (
     <aside className={styles.sidebar}>
       <div className={styles.brand}>
-        <span className={styles.brandText}>NWA Codes</span>
-        <span className={styles.brandSubtext}>Admin</span>
+        <Image
+          src="/nwa-codes-white-transparent.svg"
+          alt="NWA Codes"
+          width={32}
+          height={32}
+          className={styles.brandLogo}
+        />
+        <span className={styles.brandSubtext}>Admin Console</span>
       </div>
       <nav className={styles.nav}>
         <ul className={styles.navList}>
@@ -45,6 +55,18 @@ export const AdminSidebar = (): JSX.Element => {
           ))}
         </ul>
       </nav>
+      <div className={styles.footer}>
+        <Link href="/" className={styles.footerLink}>
+          <FontAwesomeIcon icon={faHouse} className={styles.footerIcon} />
+          Home
+        </Link>
+        <SignOutButton>
+          <button className={styles.footerLink} type="button">
+            <FontAwesomeIcon icon={faArrowRightFromBracket} className={styles.footerIcon} />
+            Sign Out
+          </button>
+        </SignOutButton>
+      </div>
     </aside>
   );
 };
