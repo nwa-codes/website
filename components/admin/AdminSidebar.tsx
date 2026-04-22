@@ -35,8 +35,8 @@ export const AdminSidebar = (): JSX.Element => {
         <Image
           src="/nwa-codes-white-transparent.svg"
           alt="NWA Codes"
-          width={32}
-          height={32}
+          width={40}
+          height={40}
           className={styles.brandLogo}
         />
         <span className={styles.brandSubtext}>Admin Console</span>
