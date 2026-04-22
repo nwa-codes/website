@@ -1,17 +1,13 @@
-import { forwardRef } from 'react';
-import type { InputHTMLAttributes, ReactNode } from 'react';
+import type { InputHTMLAttributes, ReactNode, Ref } from 'react';
 import styles from './Checkbox.module.css';
 
-interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
+type CheckboxProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> & {
   children?: ReactNode;
-}
+  ref?: Ref<HTMLInputElement>;
+};
 
-export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
-  ({ className = '', children, ...props }, ref) => {
-    return (
-      <input ref={ref} type="checkbox" className={`${styles.checkbox} ${className}`} {...props} />
-    );
-  }
-);
-
-Checkbox.displayName = 'Checkbox';
+export const Checkbox = ({ className = '', children, ref, ...props }: CheckboxProps) => {
+  return (
+    <input ref={ref} type="checkbox" className={`${styles.checkbox} ${className}`} {...props} />
+  );
+};

@@ -2,19 +2,19 @@ import type { JSX } from 'react';
 import { Checkbox } from './Checkbox';
 import styles from './CheckboxGroup.module.css';
 
-interface CheckboxOption {
+type CheckboxOption = {
   id: string;
   value: string;
   label: string;
-}
+};
 
-interface CheckboxGroupProps {
+type CheckboxGroupProps = {
   label: string;
   name: string;
   options: CheckboxOption[];
   errors?: string[];
   disabled?: boolean;
-}
+};
 
 export const CheckboxGroup = ({
   label,

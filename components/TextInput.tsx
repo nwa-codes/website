@@ -1,10 +1,10 @@
 import type { JSX, InputHTMLAttributes } from 'react';
 import styles from './TextInput.module.css';
 
-interface TextInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'className'> {
+type TextInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'className'> & {
   label?: string;
   errors?: string[];
-}
+};
 
 export const TextInput = ({ label, errors, ...inputProps }: TextInputProps): JSX.Element => {
   return (

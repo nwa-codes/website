@@ -11,9 +11,9 @@ import styles from './EventCard.module.css';
 import { formatInTimeZone } from 'date-fns-tz';
 import type { JSX } from 'react';
 
-interface EventCardProps {
+type EventCardProps = {
   event: Event;
-}
+};
 
 type BackgroundImageStyle = React.CSSProperties & { '--background-image': string };
 
