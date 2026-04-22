@@ -8,3 +8,9 @@
   font-weight: 700;
   margin-bottom: 32px;
 }
+
+@media (max-width: 768px) {
+  .page {
+    padding: 20px 16px;
+  }
+}

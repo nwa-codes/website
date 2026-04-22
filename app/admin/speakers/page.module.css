@@ -29,3 +29,16 @@
 .createLink:hover {
   background-color: #e0e0e0;
 }
+
+@media (max-width: 768px) {
+  .page {
+    padding: 20px 16px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+}

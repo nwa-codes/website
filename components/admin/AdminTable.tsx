@@ -43,7 +43,7 @@ export const AdminTable = <T,>({ columns, rows, keyField }: AdminTableProps<T>):
             rows.map((row) => (
               <tr key={String(row[keyField])} className={styles.tr}>
                 {columns.map((column) => (
-                  <td key={column.key} className={styles.td}>
+                  <td key={column.key} className={styles.td} data-label={column.label}>
                     {column.render
                       ? column.render(row)
                       : String(row[column.key as keyof T])}

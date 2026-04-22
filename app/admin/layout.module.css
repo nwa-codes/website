@@ -9,3 +9,9 @@
   min-width: 0;
   overflow-y: auto;
 }
+
+@media (max-width: 768px) {
+  .content {
+    padding-top: 52px;
+  }
+}
