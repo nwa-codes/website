@@ -38,6 +38,18 @@ const buildColumns = () => [
     ),
   },
   {
+    key: 'rsvpCount',
+    label: 'RSVPs',
+    render: (row: AdminEvent) =>
+      row.rsvpCount != null ? (
+        <Link href={`/admin/events/${row.id}/rsvps`} className={styles.rsvpLink}>
+          {row.rsvpCount}
+        </Link>
+      ) : (
+        '—'
+      ),
+  },
+  {
     key: 'actions',
     label: 'Actions',
     render: (row: AdminEvent) => <EventActions eventId={row.id} eventTitle={row.title} />,

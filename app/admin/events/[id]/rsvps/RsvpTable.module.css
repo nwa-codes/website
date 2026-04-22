@@ -1,0 +1,19 @@
+.badge {
+  border-radius: 4px;
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 2px 8px;
+  text-transform: lowercase;
+}
+
+.website {
+  background-color: rgba(76, 175, 80, 0.15);
+  color: #4caf50;
+}
+
+.discord {
+  background-color: rgba(88, 101, 242, 0.15);
+  color: #5865f2;
+}

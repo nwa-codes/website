@@ -1,4 +1,4 @@
-import type { AdminEvent, AdminSpeaker, AdminSponsor } from './event.types';
+import type { AdminEvent, AdminRsvp, AdminSpeaker, AdminSponsor } from './event.types';
 
 /**
  * Performs an authenticated request to the Atlas API.
@@ -66,6 +66,13 @@ export const updateEvent = (id: string, payload: Partial<AdminEvent>): Promise<A
  */
 export const softDeleteEvent = (id: string): Promise<void> =>
   atlasRequest<void>(`/api/events/${id}`, { method: 'DELETE' });
+
+/**
+ * Fetches all RSVPs for a given event from the Atlas admin API.
+ * Returns the RSVP list and total count (excludes 'not_going' from count per API contract).
+ */
+export const getEventRsvps = (eventId: string): Promise<{ rsvps: AdminRsvp[]; total: number }> =>
+  atlasRequest<{ rsvps: AdminRsvp[]; total: number }>(`/api/events/${eventId}/rsvps`);
 
 /**
  * Fetches all speakers from the Atlas admin API.

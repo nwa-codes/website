@@ -77,4 +77,15 @@ export type AdminEvent = {
   eventType: string | null;
   speakers: AdminSpeaker[];
   sponsors: AdminSponsor[];
+  rsvpCount?: number;
+};
+
+export type AdminRsvp = {
+  id: number;
+  source: 'website' | 'discord';
+  status: 'interested' | 'going' | 'not_going';
+  email: string | null;
+  discordDisplayName: string | null;
+  discordUsername: string | null;
+  createdAt: string;
 };
