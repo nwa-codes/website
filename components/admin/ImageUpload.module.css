@@ -1,0 +1,61 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  color: #c7c7c7;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.preview {
+  display: inline-block;
+  border: 1px solid #2a2a2a;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.previewImage {
+  display: block;
+  object-fit: cover;
+}
+
+.input {
+  background-color: #1d1d1d;
+  border: 1px solid #2a2a2a;
+  border-radius: 4px;
+  color: #c7c7c7;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 6px 10px;
+  width: 100%;
+}
+
+.input:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.input::file-selector-button {
+  background-color: #2a2a2a;
+  border: none;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  font-size: 0.8rem;
+  margin-right: 10px;
+  padding: 4px 10px;
+}
+
+.status {
+  color: #c7c7c7;
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+.error {
+  color: #e05a5a;
+  font-size: 0.8rem;
+}

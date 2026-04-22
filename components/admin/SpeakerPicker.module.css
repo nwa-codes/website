@@ -1,0 +1,74 @@
+.list {
+  border: 1px solid #2a2a2a;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  max-height: 280px;
+  overflow-y: auto;
+  padding: 0;
+}
+
+.item {
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+.label {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  gap: 10px;
+  padding: 10px 14px;
+  transition: background-color 0.1s ease;
+}
+
+.label:hover {
+  background-color: #1a1a1a;
+}
+
+.labelInactive {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.checkbox {
+  accent-color: #E32359;
+  cursor: pointer;
+  flex-shrink: 0;
+  height: 16px;
+  width: 16px;
+}
+
+.checkbox:disabled {
+  cursor: not-allowed;
+}
+
+.name {
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.title {
+  color: #c7c7c7;
+  font-size: 0.8rem;
+}
+
+.inactiveBadge {
+  color: #888;
+  font-size: 0.75rem;
+  font-style: italic;
+}
+
+.empty {
+  color: #c7c7c7;
+  font-style: italic;
+  font-size: 0.85rem;
+  padding: 14px;
+  text-align: center;
+}
