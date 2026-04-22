@@ -88,8 +88,8 @@
 
   .td {
     display: flex;
-    align-items: flex-start;
-    gap: 8px;
+    flex-direction: column;
+    gap: 4px;
     padding: 8px 16px;
     border-bottom: 1px solid #222;
   }
@@ -105,9 +105,6 @@
     font-weight: 600;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    min-width: 80px;
-    flex-shrink: 0;
-    padding-top: 1px;
   }
 
   .empty {
