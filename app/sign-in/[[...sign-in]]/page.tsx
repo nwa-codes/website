@@ -95,8 +95,8 @@ const SignInPage = (): JSX.Element => {
       setEmailCodeSource('first_factor');
     }
 
-    setIsSubmitting(false);
     setStep(nextStep);
+    setIsSubmitting(false);
   };
 
   const handlePasswordSubmit = async (event: React.FormEvent) => {
@@ -262,6 +262,7 @@ const SignInPage = (): JSX.Element => {
               className={styles.backButton}
               type="button"
               onClick={handleBackToIdentifier}
+              disabled={isLoading}
             >
               Use a different email
             </button>
@@ -308,6 +309,7 @@ const SignInPage = (): JSX.Element => {
               className={styles.backButton}
               type="button"
               onClick={handleBackToIdentifier}
+              disabled={isLoading}
             >
               Use a different email
             </button>
