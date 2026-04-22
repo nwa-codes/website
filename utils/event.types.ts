@@ -57,7 +57,6 @@ export type AdminSponsor = {
   name: string;
   logoUrl: string | null;
   websiteUrl: string | null;
-  tier: string;
   active: boolean;
 };
 

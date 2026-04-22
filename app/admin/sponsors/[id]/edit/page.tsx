@@ -26,7 +26,6 @@ const EditSponsorPage = async ({ params }: EditSponsorPageProps): Promise<JSX.El
           name: sponsor.name,
           logoUrl: sponsor.logoUrl ?? '',
           websiteUrl: sponsor.websiteUrl ?? '',
-          tier: sponsor.tier,
         }}
         submitLabel="Save Changes"
       />

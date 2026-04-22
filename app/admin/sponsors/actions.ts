@@ -7,10 +7,9 @@ import { requireAdmin } from '@/lib/auth';
 import { createSponsor, updateSponsor, deactivateSponsor } from '@/utils/admin-api';
 
 const SponsorSchema = z.object({
-  name: z.string().min(1),
+  name: z.string().min(1, 'Name is required'),
   logoUrl: z.string().optional(),
   websiteUrl: z.string().optional(),
-  tier: z.string().min(1),
 });
 
 export type SponsorFormValues = z.input<typeof SponsorSchema>;

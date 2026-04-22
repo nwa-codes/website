@@ -52,9 +52,6 @@ export const SponsorPicker = ({ sponsors, value, onChange }: SponsorPickerProps)
               onChange={() => toggleSponsor(sponsor, value, onChange)}
             />
             <span className={styles.name}>{sponsor.name}</span>
-            {sponsor.tier ? (
-              <span className={styles.tier}>{sponsor.tier}</span>
-            ) : null}
             {!sponsor.active ? (
               <span className={styles.inactiveBadge}>(inactive)</span>
             ) : null}

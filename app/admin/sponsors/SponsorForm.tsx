@@ -7,7 +7,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
 import { FormField } from '@/components/admin/FormField';
-import { AdminSelect } from '@/components/admin/AdminSelect';
 import { ImageUpload } from '@/components/admin/ImageUpload';
 
 import { createSponsorAction, updateSponsorAction } from './actions';
@@ -15,10 +14,9 @@ import type { SponsorFormValues } from './actions';
 import styles from './SponsorForm.module.css';
 
 const SponsorFormSchema = z.object({
-  name: z.string().min(1),
+  name: z.string().min(1, 'Name is required'),
   logoUrl: z.string().optional(),
   websiteUrl: z.string().optional(),
-  tier: z.string().min(1),
 });
 
 type SponsorFormSchema = z.infer<typeof SponsorFormSchema>;
@@ -28,13 +26,6 @@ type SponsorFormProps = {
   defaultValues?: Partial<SponsorFormValues>;
   submitLabel: string;
 };
-
-const TIER_OPTIONS = [
-  { label: 'Gold', value: 'gold' },
-  { label: 'Silver', value: 'silver' },
-  { label: 'Bronze', value: 'bronze' },
-  { label: 'Community', value: 'community' },
-];
 
 /**
  * Shared form for creating and editing sponsors.
@@ -54,7 +45,6 @@ export const SponsorForm = ({ sponsorId, defaultValues, submitLabel }: SponsorFo
       name: defaultValues?.name ?? '',
       logoUrl: defaultValues?.logoUrl ?? '',
       websiteUrl: defaultValues?.websiteUrl ?? '',
-      tier: defaultValues?.tier ?? '',
     },
   });
 
@@ -70,7 +60,7 @@ export const SponsorForm = ({ sponsorId, defaultValues, submitLabel }: SponsorFo
 
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className={styles.form}>
-      <FormField label="Name" error={errors.name?.message}>
+      <FormField label="Name *" error={errors.name?.message}>
         <input
           {...register('name')}
           type="text"
@@ -99,21 +89,6 @@ export const SponsorForm = ({ sponsorId, defaultValues, submitLabel }: SponsorFo
           type="text"
           className={styles.input}
           placeholder="https://example.com"
-        />
-      </FormField>
-
-      <FormField label="Tier" error={errors.tier?.message}>
-        <Controller
-          name="tier"
-          control={control}
-          render={({ field }) => (
-            <AdminSelect
-              options={TIER_OPTIONS}
-              value={field.value}
-              onChange={field.onChange}
-              placeholder="Select a tier"
-            />
-          )}
         />
       </FormField>
 
