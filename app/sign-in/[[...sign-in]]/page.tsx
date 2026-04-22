@@ -42,8 +42,9 @@ const SignInPage = (): JSX.Element => {
   const [password, setPassword] = useState('');
   const [code, setCode] = useState('');
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const isLoading = fetchStatus === 'fetching';
+  const isLoading = fetchStatus === 'fetching' || isSubmitting;
 
   const resolveDisplayError = (): string | null => {
     if (submitError !== null) {
@@ -72,11 +73,13 @@ const SignInPage = (): JSX.Element => {
   const handleIdentifierSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setSubmitError(null);
+    setIsSubmitting(true);
 
     const { error } = await signIn.create({ identifier: email });
 
     if (error !== null) {
       setSubmitError(error.message);
+      setIsSubmitting(false);
       return;
     }
 
@@ -86,22 +89,26 @@ const SignInPage = (): JSX.Element => {
       const { error: sendError } = await signIn.emailCode.sendCode();
       if (sendError !== null) {
         setSubmitError(sendError.message);
+        setIsSubmitting(false);
         return;
       }
       setEmailCodeSource('first_factor');
     }
 
+    setIsSubmitting(false);
     setStep(nextStep);
   };
 
   const handlePasswordSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setSubmitError(null);
+    setIsSubmitting(true);
 
     const { error } = await signIn.password({ password });
 
     if (error !== null) {
       setSubmitError(error.message);
+      setIsSubmitting(false);
       return;
     }
 
@@ -109,9 +116,11 @@ const SignInPage = (): JSX.Element => {
       const { error: sendError } = await signIn.mfa.sendEmailCode();
       if (sendError !== null) {
         setSubmitError(sendError.message);
+        setIsSubmitting(false);
         return;
       }
       setEmailCodeSource('second_factor');
+      setIsSubmitting(false);
       setStep('email_code');
       return;
     }
@@ -120,6 +129,7 @@ const SignInPage = (): JSX.Element => {
       const { error: finalizeError } = await signIn.finalize();
       if (finalizeError !== null) {
         setSubmitError(finalizeError.message);
+        setIsSubmitting(false);
         return;
       }
       router.push('/admin');
@@ -127,11 +137,13 @@ const SignInPage = (): JSX.Element => {
     }
 
     setSubmitError('Sign in could not be completed. Please try again.');
+    setIsSubmitting(false);
   };
 
   const handleEmailCodeSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setSubmitError(null);
+    setIsSubmitting(true);
 
     const { error } =
       emailCodeSource === 'second_factor'
@@ -140,6 +152,7 @@ const SignInPage = (): JSX.Element => {
 
     if (error !== null) {
       setSubmitError(error.message);
+      setIsSubmitting(false);
       return;
     }
 
@@ -147,6 +160,7 @@ const SignInPage = (): JSX.Element => {
       const { error: finalizeError } = await signIn.finalize();
       if (finalizeError !== null) {
         setSubmitError(finalizeError.message);
+        setIsSubmitting(false);
         return;
       }
       router.push('/admin');
@@ -154,6 +168,7 @@ const SignInPage = (): JSX.Element => {
     }
 
     setSubmitError('Verification could not be completed. Please try again.');
+    setIsSubmitting(false);
   };
 
   const handleBackToIdentifier = () => {
