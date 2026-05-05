@@ -10,6 +10,7 @@ const atlasRequest = async <T>(
 ): Promise<T> => {
   const url = `${process.env.ATLAS_API_URL}${path}`;
   const response = await fetch(url, {
+    cache: 'no-store',
     ...options,
     headers: {
       'Content-Type': 'application/json',
@@ -30,10 +31,11 @@ const atlasRequest = async <T>(
 };
 
 /**
- * Fetches all events from the Atlas admin API.
+ * Fetches all events from the Atlas admin API regardless of status.
+ * Passes all statuses explicitly since the API defaults to published+completed only.
  */
 export const getAdminEvents = async (): Promise<AdminEvent[]> => {
-  const data = await atlasRequest<{ events: AdminEvent[] }>('/api/events');
+  const data = await atlasRequest<{ events: AdminEvent[] }>('/api/events?status=draft,published,completed,cancelled');
   return data.events;
 };
 
