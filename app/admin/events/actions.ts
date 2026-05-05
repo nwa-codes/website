@@ -20,7 +20,7 @@ const SponsorInputSchema = z.object({
   name: z.string().optional(),
   logoUrl: z.string().nullable().optional(),
   websiteUrl: z.string().nullable().optional(),
-  sponsorshipType: z.string().optional(),
+  sponsorshipType: z.string().nullable().optional(),
   displayOrder: z.number().int().optional(),
 }).passthrough();
 

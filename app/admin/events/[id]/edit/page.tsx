@@ -3,6 +3,7 @@ import type { JSX } from 'react';
 import { formatInTimeZone } from 'date-fns-tz';
 
 import { getAdminEvent, getAdminEvents, getAdminSpeakers, getAdminSponsors } from '@/utils/admin-api';
+import type { AdminSponsor } from '@/utils/event.types';
 
 import { EventForm } from '../../EventForm';
 import { CancelEventButton } from './CancelEventButton';
@@ -23,6 +24,9 @@ const EditEventPage = async ({ params }: EditEventPageProps): Promise<JSX.Elemen
   ]);
 
   const previousImages = [...new Set(allEvents.map((e) => e.imageUrl).filter((url): url is string => !!url))];
+
+  type AtlasEventSponsor = { sponsorshipType: string | null; displayOrder: number; sponsor: AdminSponsor };
+  const eventSponsors = (event.sponsors as unknown as AtlasEventSponsor[]).map((s) => s.sponsor);
 
   return (
     <div className={styles.page}>
@@ -46,7 +50,7 @@ const EditEventPage = async ({ params }: EditEventPageProps): Promise<JSX.Elemen
           imageUrl: event.imageUrl ?? '',
           videoUrl: event.videoUrl ?? '',
           speakers: event.speakers,
-          sponsors: event.sponsors,
+          sponsors: eventSponsors,
         }}
         submitLabel="Save Changes"
         previousImages={previousImages}
