@@ -2,7 +2,7 @@ import type { JSX } from 'react';
 
 import { formatInTimeZone } from 'date-fns-tz';
 
-import { getAdminEvent, getAdminSpeakers, getAdminSponsors } from '@/utils/admin-api';
+import { getAdminEvent, getAdminEvents, getAdminSpeakers, getAdminSponsors } from '@/utils/admin-api';
 
 import { EventForm } from '../../EventForm';
 import { CancelEventButton } from './CancelEventButton';
@@ -15,16 +15,22 @@ type EditEventPageProps = {
 const EditEventPage = async ({ params }: EditEventPageProps): Promise<JSX.Element> => {
   const { id } = await params;
 
-  const [event, speakers, sponsors] = await Promise.all([
+  const [event, speakers, sponsors, allEvents] = await Promise.all([
     getAdminEvent(id),
     getAdminSpeakers(),
     getAdminSponsors(),
+    getAdminEvents(),
   ]);
+
+  const previousImages = [...new Set(allEvents.map((e) => e.imageUrl).filter((url): url is string => !!url))];
 
   return (
     <div className={styles.page}>
       <div className={styles.header}>
-        <h1 className={styles.heading}>Edit Event</h1>
+        <div>
+          <h1 className={styles.heading}>Edit Event</h1>
+          <p className={styles.eventId}>ID: {id}</p>
+        </div>
         <CancelEventButton eventId={event.id} eventTitle={event.title} />
       </div>
       <EventForm
@@ -43,6 +49,7 @@ const EditEventPage = async ({ params }: EditEventPageProps): Promise<JSX.Elemen
           sponsors: event.sponsors,
         }}
         submitLabel="Save Changes"
+        previousImages={previousImages}
       />
     </div>
   );

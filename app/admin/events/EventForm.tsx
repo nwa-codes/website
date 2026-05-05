@@ -8,6 +8,7 @@ import { z } from 'zod';
 
 import { FormField } from '@/components/admin/FormField';
 import { AdminSelect } from '@/components/admin/AdminSelect';
+import { EventImagePicker } from '@/components/admin/EventImagePicker';
 import { ImageUpload } from '@/components/admin/ImageUpload';
 import { SpeakerPicker } from '@/components/admin/SpeakerPicker';
 import { SponsorPicker } from '@/components/admin/SponsorPicker';
@@ -44,6 +45,7 @@ type EventFormProps = {
   sponsors: AdminSponsor[];
   defaultValues?: Partial<EventFormValues>;
   submitLabel: string;
+  previousImages?: string[];
 };
 
 /**
@@ -56,6 +58,7 @@ export const EventForm = ({
   sponsors,
   defaultValues,
   submitLabel,
+  previousImages,
 }: EventFormProps): JSX.Element => {
   const [isPending, startTransition] = useTransition();
 
@@ -146,13 +149,21 @@ export const EventForm = ({
         <Controller
           name="imageUrl"
           control={control}
-          render={({ field }) => (
-            <ImageUpload
-              folder="event-title-photos"
-              value={field.value ?? null}
-              onChange={field.onChange}
-            />
-          )}
+          render={({ field }) =>
+            previousImages && previousImages.length > 0 ? (
+              <EventImagePicker
+                previousImages={previousImages}
+                value={field.value ?? null}
+                onChange={field.onChange}
+              />
+            ) : (
+              <ImageUpload
+                folder="event-title-photos"
+                value={field.value ?? null}
+                onChange={field.onChange}
+              />
+            )
+          }
         />
       </FormField>
 

@@ -15,6 +15,13 @@
   font-weight: 700;
 }
 
+.eventId {
+  color: #c7c7c7;
+  font-family: monospace;
+  font-size: 0.8rem;
+  margin-top: 2px;
+}
+
 @media (max-width: 768px) {
   .page {
     padding: 20px 16px;

@@ -6,6 +6,26 @@
 const CLOUDINARY_CLOUD_NAME = 'dmrl9ghse';
 
 /**
+ * Transforms a Cloudinary image URL to serve a resized thumbnail.
+ * Uses fill crop and auto quality/format for fast preview loading.
+ * Non-Cloudinary URLs are returned unchanged.
+ */
+export const getImageThumbnailUrl = (url: string, width: number, height: number): string => {
+  const cloudinaryPattern = /cloudinary\.com\/[^/]+\/image\/upload\/(v\d+\/)?(.+)/;
+  const match = url.match(cloudinaryPattern);
+
+  if (!match) {
+    return url;
+  }
+
+  const [, version, publicId] = match;
+  const transformations = `c_fill,w_${width * 2},h_${height * 2},q_auto,f_auto`;
+  const versionPart = version ?? '';
+
+  return `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/${transformations}/${versionPart}${publicId}`;
+};
+
+/**
  * Transforms Cloudinary image URLs to generate square, face-cropped avatars.
  * Uses face detection and crop-to-fill transformation to prevent stretching.
  * Generates 2x size for retina displays while preserving original version numbers.

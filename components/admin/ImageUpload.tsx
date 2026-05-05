@@ -4,6 +4,8 @@ import { useState } from 'react';
 import type { ChangeEvent, JSX } from 'react';
 import Image from 'next/image';
 
+import { getImageThumbnailUrl } from '@/utils/cloudinary-client';
+
 import styles from './ImageUpload.module.css';
 
 type ImageUploadFolder = 'event-title-photos' | 'event-photos' | 'speakers' | 'sponsors';
@@ -63,7 +65,7 @@ export const ImageUpload = ({ folder, value, onChange, label }: ImageUploadProps
       {value ? (
         <div className={styles.preview}>
           <Image
-            src={value}
+            src={getImageThumbnailUrl(value, 120, 80)}
             alt="Current image"
             width={120}
             height={80}
