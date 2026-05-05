@@ -2,9 +2,21 @@
 
 import { z } from 'zod';
 import { redirect } from 'next/navigation';
+import { fromZonedTime } from 'date-fns-tz';
 
 import { requireAdmin } from '@/lib/auth';
 import { createEvent, updateEvent, softDeleteEvent } from '@/utils/admin-api';
+
+const CHICAGO = 'America/Chicago';
+
+/**
+ * Converts a naive datetime-local string (e.g. "2026-05-20T18:00") entered in
+ * Central time to an explicit UTC ISO string. This ensures the Atlas API's
+ * z.coerce.date() always receives an unambiguous timestamp regardless of server
+ * timezone.
+ */
+const chicagoToUtcIso = (localDateTimeStr: string): string =>
+  fromZonedTime(localDateTimeStr, CHICAGO).toISOString();
 
 const SpeakerInputSchema = z.object({
   id: z.number().int().positive(),
@@ -69,7 +81,7 @@ const mapSponsor = (sponsor: z.output<typeof SponsorInputSchema>) => ({
  */
 const buildAtlasPayload = (parsed: z.output<typeof EventSchema>) => ({
   title: parsed.title,
-  eventStartTime: parsed.eventStartTime,
+  eventStartTime: chicagoToUtcIso(parsed.eventStartTime),
   venueName: parsed.venueName,
   ...(parsed.venueAddress ? { venueAddress: parsed.venueAddress } : {}),
   status: parsed.status,
@@ -87,7 +99,8 @@ const buildAtlasPayload = (parsed: z.output<typeof EventSchema>) => ({
 export const createEventAction = async (payload: EventFormValues): Promise<void> => {
   await requireAdmin();
   const parsed = EventSchema.parse(payload);
-  const endTime = new Date(new Date(parsed.eventStartTime).getTime() + 2 * 60 * 60 * 1000).toISOString();
+  const startUtc = fromZonedTime(parsed.eventStartTime, CHICAGO);
+  const endTime = new Date(startUtc.getTime() + 2 * 60 * 60 * 1000).toISOString();
   await createEvent({ ...buildAtlasPayload(parsed), eventEndTime: endTime });
   redirect('/admin/events');
 };
