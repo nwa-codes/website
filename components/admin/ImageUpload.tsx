@@ -15,6 +15,7 @@ type ImageUploadProps = {
   value: string | null;
   onChange: (url: string) => void;
   label?: string;
+  uploadName?: string;
 };
 
 type UploadState =
@@ -26,7 +27,7 @@ type UploadState =
  * File input that uploads an image to /api/admin/upload and calls onChange with the resulting URL.
  * Displays a preview of the current value when set.
  */
-export const ImageUpload = ({ folder, value, onChange, label }: ImageUploadProps): JSX.Element => {
+export const ImageUpload = ({ folder, value, onChange, label, uploadName }: ImageUploadProps): JSX.Element => {
   const [uploadState, setUploadState] = useState<UploadState>({ status: 'idle' });
 
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -40,6 +41,9 @@ export const ImageUpload = ({ folder, value, onChange, label }: ImageUploadProps
     const formData = new FormData();
     formData.append('file', file);
     formData.append('folder', folder);
+    if (uploadName) {
+      formData.append('uploadName', uploadName);
+    }
 
     try {
       const response = await fetch('/api/admin/upload', {

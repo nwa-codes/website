@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import type { UploadApiOptions } from 'cloudinary';
 
 import { cloudinary } from '@/utils/cloudinary';
 import { ForbiddenError, UnauthorizedError, requireAdmin } from '@/lib/auth';
@@ -57,6 +58,7 @@ export const POST = async (request: Request): Promise<NextResponse> => {
 
   const formData = await request.formData();
   const folder = formData.get('folder') as string | null;
+  const uploadName = formData.get('uploadName') as string | null;
 
   if (!folder || !(ALLOWED_FOLDERS as readonly string[]).includes(folder)) {
     return NextResponse.json({ error: 'Invalid folder' }, { status: 400 });
@@ -84,9 +86,12 @@ export const POST = async (request: Request): Promise<NextResponse> => {
   }
 
   try {
-    const result = await cloudinary.uploader.upload(toDataUri(buffer, file.type), {
+    const uploadOptions: UploadApiOptions = {
       folder: folder as AllowedFolder,
-    });
+      ...(uploadName ? { public_id: uploadName, unique_filename: true } : {}),
+    };
+
+    const result = await cloudinary.uploader.upload(toDataUri(buffer, file.type), uploadOptions);
 
     return NextResponse.json({ url: result.secure_url, publicId: result.public_id });
   } catch {

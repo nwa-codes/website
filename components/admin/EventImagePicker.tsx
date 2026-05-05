@@ -13,6 +13,7 @@ type EventImagePickerProps = {
   previousImages: string[];
   value: string | null;
   onChange: (url: string) => void;
+  uploadName?: string;
 };
 
 /**
@@ -24,6 +25,7 @@ export const EventImagePicker = ({
   previousImages,
   value,
   onChange,
+  uploadName,
 }: EventImagePickerProps): JSX.Element => {
   const effectiveValue = value || DEFAULT_EVENT_IMAGE;
 
@@ -34,7 +36,7 @@ export const EventImagePicker = ({
 
   return (
     <div className={styles.wrapper}>
-      <ImageUpload folder="event-title-photos" value={value} onChange={onChange} />
+      <ImageUpload folder="event-title-photos" value={value} onChange={onChange} uploadName={uploadName} />
 
       <div className={styles.previousSection}>
         <span className={styles.previousLabel}>Or choose a previous image</span>

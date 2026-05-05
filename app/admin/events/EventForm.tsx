@@ -62,10 +62,19 @@ export const EventForm = ({
 }: EventFormProps): JSX.Element => {
   const [isPending, startTransition] = useTransition();
 
+  const slugifyTitle = (text: string): string =>
+    text
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .trim()
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-');
+
   const {
     register,
     handleSubmit,
     control,
+    watch,
     formState: { errors },
   } = useForm<EventFormSchema>({
     resolver: zodResolver(EventFormSchema),
@@ -81,6 +90,8 @@ export const EventForm = ({
       sponsors: (defaultValues?.sponsors as AdminSponsor[]) ?? [],
     },
   });
+
+  const titleSlug = slugifyTitle(watch('title') ?? '');
 
   const handleFormSubmit = (data: EventFormSchema) => {
     startTransition(async () => {
@@ -155,12 +166,14 @@ export const EventForm = ({
                 previousImages={previousImages}
                 value={field.value ?? null}
                 onChange={field.onChange}
+                uploadName={titleSlug || undefined}
               />
             ) : (
               <ImageUpload
                 folder="event-title-photos"
                 value={field.value ?? null}
                 onChange={field.onChange}
+                uploadName={titleSlug || undefined}
               />
             )
           }
