@@ -2,11 +2,17 @@
   "name": "my-v0-project",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22.19.0"
+  },
   "scripts": {
     "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "next typegen && tsc --noEmit -p tsconfig.typecheck.json"
   },
   "dependencies": {
     "@awesome.me/kit-5c0a16ac00": "^1.0.7",
@@ -31,6 +37,7 @@
     "@types/node": "^22",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.10"
   }
 }

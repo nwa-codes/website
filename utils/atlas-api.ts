@@ -1,4 +1,9 @@
+import { endOfDay } from 'date-fns';
+import { fromZonedTime, toZonedTime } from 'date-fns-tz';
+
 import type { Event, Speaker } from './event.types';
+
+const CHICAGO_TIME_ZONE = 'America/Chicago';
 
 type ApiSpeaker = {
   id: number;
@@ -133,6 +138,42 @@ const mapApiEventToEvent = (apiEvent: ApiEvent): Event => {
 };
 
 /**
+ * Computes the real UTC instant of 23:59:59.999 America/Chicago local time
+ * on the calendar day an event's start time falls on. Round-trips through
+ * the zoned wall-clock time so the UTC offset used is the one in effect at
+ * the end of that Chicago day, not at the event's start.
+ */
+const chicagoEndOfEventDay = (event: Event): Date => {
+  const zonedStart = toZonedTime(new Date(event.date), CHICAGO_TIME_ZONE);
+  return fromZonedTime(endOfDay(zonedStart), CHICAGO_TIME_ZONE);
+};
+
+/**
+ * Splits events into the nearest current-or-upcoming event and a
+ * most-recent-first list of past events, using an America/Chicago
+ * end-of-calendar-day cutoff. Sorts both buckets explicitly so the result
+ * is correct regardless of the order `events` arrives in.
+ */
+export const partitionEvents = (
+  events: Event[],
+  now: Date
+): { nextEvent: Event | null; pastEvents: Event[] } => {
+  const isPast = (event: Event): boolean => chicagoEndOfEventDay(event).getTime() < now.getTime();
+
+  const upcoming = events.filter((event) => !isPast(event));
+  const past = events.filter(isPast);
+
+  const nextEvent =
+    upcoming.toSorted((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())[0] ??
+    null;
+  const pastEvents = past.toSorted(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
+
+  return { nextEvent, pastEvents };
+};
+
+/**
  * Fetches all published and completed events from the Atlas API and splits
  * them into the next upcoming event and a list of past events.
  */
@@ -149,11 +190,7 @@ export const getEvents = async (): Promise<{ nextEvent: Event | null; pastEvents
   const { events } = await response.json();
   const mapped = (events as ApiEvent[]).map(mapApiEventToEvent);
 
-  const now = new Date();
-  const nextEvent = mapped.find((event: Event) => new Date(event.date) >= now) ?? null;
-  const pastEvents = mapped.filter((event: Event) => new Date(event.date) < now);
-
-  return { nextEvent, pastEvents };
+  return partitionEvents(mapped, new Date());
 };
 
 
