@@ -7,7 +7,7 @@ import { SoftDeleteButton } from '@/components/admin/SoftDeleteButton';
 import { deactivateSponsorAction } from '../../actions';
 
 type DeactivateSponsorButtonProps = {
-  sponsorId: string;
+  sponsorId: number;
   sponsorName: string;
 };
 

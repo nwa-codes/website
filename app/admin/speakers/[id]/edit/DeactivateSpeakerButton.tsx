@@ -7,7 +7,7 @@ import { SoftDeleteButton } from '@/components/admin/SoftDeleteButton';
 import { deactivateSpeakerAction } from '../../actions';
 
 type DeactivateSpeakerButtonProps = {
-  speakerId: string;
+  speakerId: number;
   speakerName: string;
 };
 

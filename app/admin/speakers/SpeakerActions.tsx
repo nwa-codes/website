@@ -12,7 +12,7 @@ import { deactivateSpeakerAction } from './actions';
 import styles from './SpeakerActions.module.css';
 
 type SpeakerActionsProps = {
-  speakerId: string;
+  speakerId: number;
   speakerName: string;
 };
 

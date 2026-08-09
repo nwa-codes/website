@@ -38,7 +38,7 @@ export type MockEvent = {
 };
 
 export type AdminSpeaker = {
-  id: string;
+  id: number;
   name: string;
   speakerTitle: string;
   bio: string | null;
@@ -53,7 +53,7 @@ export type AdminSpeaker = {
 };
 
 export type AdminSponsor = {
-  id: string;
+  id: number;
   name: string;
   logoUrl: string | null;
   websiteUrl: string | null;
@@ -78,6 +78,41 @@ export type AdminEvent = {
   speakers: AdminSpeaker[];
   sponsors: AdminSponsor[];
   rsvpCount?: number;
+};
+
+export type AdminEventSpeakerInput = {
+  id: number;
+  name?: string;
+  title?: string;
+  imageUrl?: string;
+  displayOrder?: number;
+};
+
+export type AdminEventSponsorInput = {
+  id: number;
+  name?: string;
+  logoUrl?: string;
+  websiteUrl?: string;
+  sponsorshipType?: string;
+  displayOrder?: number;
+};
+
+/**
+ * Shape the Atlas API accepts when creating or updating an event. This is the
+ * write counterpart to AdminEvent: speakers and sponsors are sent as id
+ * references with optional overrides, not as fully hydrated records.
+ */
+export type AdminEventPayload = {
+  title?: string;
+  eventStartTime?: string;
+  eventEndTime?: string;
+  venueName?: string;
+  venueAddress?: string;
+  status?: AdminEvent['status'];
+  imageUrl?: string;
+  videoUrl?: string;
+  speakers?: AdminEventSpeakerInput[];
+  sponsors?: AdminEventSponsorInput[];
 };
 
 export type AdminRsvp = {

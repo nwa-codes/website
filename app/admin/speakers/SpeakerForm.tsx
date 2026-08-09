@@ -22,7 +22,7 @@ const SpeakerFormSchema = z.object({
 type SpeakerFormSchema = z.infer<typeof SpeakerFormSchema>;
 
 type SpeakerFormProps = {
-  speakerId?: string;
+  speakerId?: number;
   defaultValues?: Partial<SpeakerFormValues>;
   submitLabel: string;
 };

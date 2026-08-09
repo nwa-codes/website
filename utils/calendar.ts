@@ -27,8 +27,10 @@ export function generateICSFile(event: Event): string {
   // Format description
   const description = [
     event.title,
-    event.speaker ? `Speaker: ${event.speaker.name}` : '',
-    event.speaker?.speakerTitle ? event.speaker.speakerTitle : '',
+    ...(event.speakers ?? []).flatMap((speaker) => [
+      `Speaker: ${speaker.name}`,
+      speaker.speakerTitle,
+    ]),
   ]
     .filter(Boolean)
     .join('\\n');

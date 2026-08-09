@@ -23,7 +23,7 @@ const EventFormSchema = z.object({
   eventStartTime: z.string().min(1, 'Start time is required'),
   venueName: z.string().min(1, 'Venue name is required'),
   venueAddress: z.string().optional(),
-  status: z.enum(['draft', 'published', 'completed', 'cancelled'], { errorMap: () => ({ message: 'Status is required' }) }),
+  status: z.enum(['draft', 'published', 'completed', 'cancelled'], { error: 'Status is required' }),
   imageUrl: z.string().optional(),
   videoUrl: z.string().optional(),
   speakers: z.array(z.unknown()).optional(),

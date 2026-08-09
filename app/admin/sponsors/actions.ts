@@ -29,10 +29,10 @@ export const createSponsorAction = async (payload: SponsorFormValues): Promise<v
  * Updates an existing sponsor by ID and redirects to the sponsors list on success.
  * Requires admin authentication.
  */
-export const updateSponsorAction = async (id: string, payload: SponsorFormValues): Promise<void> => {
+export const updateSponsorAction = async (id: number, payload: SponsorFormValues): Promise<void> => {
   await requireAdmin();
   const parsed = SponsorSchema.parse(payload);
-  await updateSponsor(id, parsed);
+  await updateSponsor(String(id), parsed);
   redirect('/admin/sponsors');
 };
 
@@ -40,8 +40,8 @@ export const updateSponsorAction = async (id: string, payload: SponsorFormValues
  * Deactivates a sponsor by ID and redirects to the sponsors list on success.
  * Requires admin authentication.
  */
-export const deactivateSponsorAction = async (id: string): Promise<void> => {
+export const deactivateSponsorAction = async (id: number): Promise<void> => {
   await requireAdmin();
-  await deactivateSponsor(id);
+  await deactivateSponsor(String(id));
   redirect('/admin/sponsors');
 };

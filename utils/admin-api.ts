@@ -1,4 +1,10 @@
-import type { AdminEvent, AdminRsvp, AdminSpeaker, AdminSponsor } from './event.types';
+import type {
+  AdminEvent,
+  AdminEventPayload,
+  AdminRsvp,
+  AdminSpeaker,
+  AdminSponsor,
+} from './event.types';
 
 /**
  * Performs an authenticated request to the Atlas API.
@@ -48,7 +54,7 @@ export const getAdminEvent = (id: string): Promise<AdminEvent> =>
 /**
  * Creates a new event via the Atlas admin API.
  */
-export const createEvent = (payload: Partial<AdminEvent>): Promise<AdminEvent> =>
+export const createEvent = (payload: AdminEventPayload): Promise<AdminEvent> =>
   atlasRequest<AdminEvent>('/api/events', {
     method: 'POST',
     body: JSON.stringify(payload),
@@ -57,7 +63,7 @@ export const createEvent = (payload: Partial<AdminEvent>): Promise<AdminEvent> =
 /**
  * Updates an existing event by ID via the Atlas admin API.
  */
-export const updateEvent = (id: string, payload: Partial<AdminEvent>): Promise<AdminEvent> =>
+export const updateEvent = (id: string, payload: AdminEventPayload): Promise<AdminEvent> =>
   atlasRequest<AdminEvent>(`/api/events/${id}`, {
     method: 'PUT',
     body: JSON.stringify(payload),

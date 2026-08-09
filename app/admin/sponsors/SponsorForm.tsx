@@ -22,7 +22,7 @@ const SponsorFormSchema = z.object({
 type SponsorFormSchema = z.infer<typeof SponsorFormSchema>;
 
 type SponsorFormProps = {
-  sponsorId?: string;
+  sponsorId?: number;
   defaultValues?: Partial<SponsorFormValues>;
   submitLabel: string;
 };

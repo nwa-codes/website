@@ -12,7 +12,7 @@ import { deactivateSponsorAction } from './actions';
 import styles from './SponsorActions.module.css';
 
 type SponsorActionsProps = {
-  sponsorId: string;
+  sponsorId: number;
   sponsorName: string;
 };
 

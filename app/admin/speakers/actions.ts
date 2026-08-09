@@ -29,10 +29,10 @@ export const createSpeakerAction = async (payload: SpeakerFormValues): Promise<v
  * Updates an existing speaker by ID and redirects to the speakers list on success.
  * Requires admin authentication.
  */
-export const updateSpeakerAction = async (id: string, payload: SpeakerFormValues): Promise<void> => {
+export const updateSpeakerAction = async (id: number, payload: SpeakerFormValues): Promise<void> => {
   await requireAdmin();
   const { speakerTitle, ...rest } = SpeakerSchema.parse(payload);
-  await updateSpeaker(id, { ...rest, title: speakerTitle });
+  await updateSpeaker(String(id), { ...rest, title: speakerTitle });
   redirect('/admin/speakers');
 };
 
@@ -40,8 +40,8 @@ export const updateSpeakerAction = async (id: string, payload: SpeakerFormValues
  * Deactivates a speaker by ID and redirects to the speakers list on success.
  * Requires admin authentication.
  */
-export const deactivateSpeakerAction = async (id: string): Promise<void> => {
+export const deactivateSpeakerAction = async (id: number): Promise<void> => {
   await requireAdmin();
-  await deactivateSpeaker(id);
+  await deactivateSpeaker(String(id));
   redirect('/admin/speakers');
 };

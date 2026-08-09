@@ -184,7 +184,7 @@ export function EventModal({ event, onClose }: EventModalProps) {
       {selectedPhoto && (
         <PhotoLightbox
           photo={selectedPhoto}
-          photos={event.photos}
+          photos={event.photos ?? []}
           onClose={() => setSelectedPhoto(null)}
         />
       )}
