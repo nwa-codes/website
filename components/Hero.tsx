@@ -49,7 +49,7 @@ export const Hero = ({ nextEvent, hasPastEvents, lastEvent }: HeroProps): JSX.El
           <h1 className={styles.heroTitle}>Stay Tuned for Our Next Event</h1>
 
           <div className={styles.noEventMessage}>
-            <p>Our next event hasn't been scheduled yet, but check back soon for updates!</p>
+            <p>Our next event hasn&apos;t been scheduled yet, but check back soon for updates!</p>
           </div>
         </header>
 

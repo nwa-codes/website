@@ -37,11 +37,11 @@ export default function CodeOfConduct(): JSX.Element {
             <p className={styles.text}>We strive to be a community where:</p>
             <ul className={styles.list}>
               <li className={styles.listItem}>
-                <strong>Everyone feels welcome</strong> – Whether you're a seasoned engineer or
-                writing your first "Hello World," you belong here.
+                <strong>Everyone feels welcome</strong> – Whether you&apos;re a seasoned engineer or
+                writing your first &quot;Hello World,&quot; you belong here.
               </li>
               <li className={styles.listItem}>
-                <strong>Learning is encouraged</strong> – There are no stupid questions. We're all
+                <strong>Learning is encouraged</strong> – There are no stupid questions. We&apos;re all
                 here to grow together.
               </li>
               <li className={styles.listItem}>
@@ -49,7 +49,7 @@ export default function CodeOfConduct(): JSX.Element {
                 assume good intentions.
               </li>
               <li className={styles.listItem}>
-                <strong>Collaboration thrives</strong> – We support each other's success and
+                <strong>Collaboration thrives</strong> – We support each other&apos;s success and
                 celebrate our wins together.
               </li>
               <li className={styles.listItem}>
@@ -71,7 +71,7 @@ export default function CodeOfConduct(): JSX.Element {
                 Respect different viewpoints, experiences, and skill levels
               </li>
               <li className={styles.listItem}>Give and accept constructive feedback gracefully</li>
-              <li className={styles.listItem}>Focus on what's best for the community</li>
+              <li className={styles.listItem}>Focus on what&apos;s best for the community</li>
               <li className={styles.listItem}>Show empathy toward other community members</li>
               <li className={styles.listItem}>
                 Be mindful of your surroundings and fellow participants
@@ -174,7 +174,7 @@ export default function CodeOfConduct(): JSX.Element {
           </section>
 
           <p className={styles.footer}>
-            We're grateful you're here and value your participation in building a positive,
+            We&apos;re grateful you&apos;re here and value your participation in building a positive,
             inclusive community.
           </p>
         </article>

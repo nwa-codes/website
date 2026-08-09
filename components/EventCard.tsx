@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faChevronRight } from '@awesome.me/kit-5c0a16ac00/icons/classic/solid';
+import { faChevronRight } from '@awesome.me/kit-5c0a16ac00/icons/classic/solid';
 import { Button } from './Button';
 import { EventModal } from './EventModal';
 import type { Event } from '@/utils/event.types';

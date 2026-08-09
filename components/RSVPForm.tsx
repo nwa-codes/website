@@ -66,7 +66,7 @@ export function RSVPForm({ event }: RSVPFormProps) {
       } else {
         setSubmitError(result.error || 'Failed to submit RSVP. Please try again.');
       }
-    } catch (error) {
+    } catch {
       setSubmitError('Failed to submit RSVP. Please try again.');
     } finally {
       setIsSubmitting(false);
@@ -121,7 +121,7 @@ export function RSVPForm({ event }: RSVPFormProps) {
   };
 
   const hasAlreadyRSVPd = submitError.includes("already RSVP'd");
-  const showCalendarButton = isSubmitted || hasAlreadyRSVPd;
+
 
   const modalContent = showEmailInput && (
     <div
